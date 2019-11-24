@@ -22,16 +22,37 @@ module Civitas
       @gestorEstados = Gestor_estados.new
       @estado = @gestorEstados.estado_inicial
       @indiceJugadorActual = Dado.instance.quien_empieza(total_jugadores)
-      @tablero = Tablero.new(30)
-     
-      casilla = Casilla.new
-      for i in 1..39   
-        @tablero.aniade_casilla(casilla)
-      end
-      
-      @tablero.aniade_juez
-      
       @mazo = MazoSorpresa.new
+      @tablero = Tablero.new(9)
+      
+      @tablero.aniade_casilla(TituloPropiedad.new("Ronda de Valencia", 35, 0.5, 55, 60, 120));
+      @tablero.aniade_casilla(@mazo, "Caja de Comunidad");
+      @tablero.aniade_casilla(200, "Impuesto sobre el capital");
+
+      @tablero.aniade_casilla(TituloPropiedad.new("Glorieta cuatro caminos", 55, 0.5, 95, 100, 200));
+      @tablero.aniade_casilla(@mazo, "Suerte");
+      @tablero.aniade_casilla(TituloPropiedad.new("Calle bravo Murillo", 65, 0.5, 115, 120, 240));
+
+      @tablero.aniade_casilla(TituloPropiedad.new("Glorieta de Bilbao", 75, 0.5, 135, 140, 280));
+      @tablero.aniade_casilla(TituloPropiedad.new("Calle Fuencarral", 85, 0.5, 155, 160, 320));
+      @tablero.aniade_casilla(TituloPropiedad.new("Avenida Felipe II", 95, 0.5, 175, 180, 360));
+      @tablero.aniade_casilla(@mazo, "Caja de Comunidad");
+      @tablero.aniade_casilla(TituloPropiedad.new("Calle Serrano", 105, 0.5, 195, 200, 400));
+      @tablero.aniade_casilla("Parking Gratuito");
+
+      @tablero.aniade_casilla(TituloPropiedad.new("Avenida de America", 115, 0.5, 215, 220, 440));
+      @tablero.aniade_casilla(@mazo, "Suerte");
+      @tablero.aniade_casilla(TituloPropiedad.new("Calle de Cea Bermudez", 125, 0.5, 235, 240, 480));
+      @tablero.aniade_casilla(TituloPropiedad.new("Avenida de los Reyes Catolicos", 135, 0.5, 255, 260, 520));
+      @tablero.aniade_casilla(TituloPropiedad.new("Plaza de Espana", 145, 0.5, 275, 280, 560));
+      @tablero.aniadeJuez();
+
+      @tablero.aniade_casilla(TituloPropiedad.new("Puerta del Sol", 155, 0.5, 295, 300, 600));
+      @tablero.aniade_casilla(@mazo, "Caja de Comunidad");
+      @tablero.aniade_casilla(TituloPropiedad.new("Gran Via", 165, 0.5, 315, 320, 640));
+      @tablero.aniade_casilla(@mazo, "Suerte");
+      @tablero.aniade_casilla(100, "Impuesto de Lujo");
+      @tablero.aniade_casilla(TituloPropiedad.new("Paseo del Prado", 205, 0.5, 395, 400, 800));
     end
     
     def cancelarHipoteca(ip) 
