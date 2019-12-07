@@ -53,7 +53,7 @@ module Civitas
     end
     
     def aniade_juez
-      juez = Casilla.new(Tipo_casilla::JUEZ.to_s)
+      juez = CasillaJuez.new(@numCasillaCarcel, "Ve a la carcel")
       
       unless @tieneJuez
         aniade_casilla(juez)
