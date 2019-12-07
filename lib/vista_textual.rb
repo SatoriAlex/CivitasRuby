@@ -72,12 +72,22 @@ module Civitas
     end
 
     def gestionar
-      opcion = menu("Seleccione gestion inmobiliaria", 
-        ["Vender", "Hipotecar", "Cancelar hipoteca", "Construir casa", 
-          "Construir hotel", "Terminar"])
-      
+      propiedades = []
+       acciones = ["Vender", "Hipotecar", "Cancelar hipoteca", "Construir casa", 
+          "Construir hotel", "Terminar"]
+        
+      opcion = menu("Seleccione gestion inmobiliaria", acciones)
       @iGestion = opcion
-      @iPropiedad = 0
+     
+      
+      if acciones[opcion] != "Terminar"
+        @juegoModel.getJugadorActual.propiedades.each do |propiedad|
+          propiedades << propiedad.to_s
+        end
+        
+        @iPropiedad = menu("Cual propiedad quieres " + acciones[opcion] + "?",
+                           propiedades)
+      end
     end
 
     def getGestion
@@ -89,11 +99,14 @@ module Civitas
     end
 
     def mostrarSiguienteOperacion(operacion)
-      puts operacion.to_s
+      puts "->>>- Operacion permitida -<<<-"
+      puts "    " + operacion.to_s
     end
 
     def mostrarEventos
+      puts "-++++- Mostrando eventos del Diario -++++-"
       puts Diario.instance.leer_evento while Diario.instance.eventos_pendientes
+      puts "-++++- Fin de los eventos -++++-"
     end
 
     def setCivitasJuego(civitas)

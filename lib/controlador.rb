@@ -31,6 +31,7 @@ module Civitas
               @juego.comprar
             end
             
+            @juego.siguientePasoCompletado(siguiente_paso)
           when Operaciones_juego::GESTIONAR
             @vista.gestionar
             
@@ -53,6 +54,7 @@ module Civitas
               @juego.construirHotel(ip)
             end
             
+            @juego.siguientePasoCompletado(siguiente_paso)
           when Operaciones_juego::SALIR_CARCEL
             salida = @vista.salirCarcel
             
@@ -61,8 +63,8 @@ module Civitas
             else
               @juego.salirCarcelTirando
             end
+            @juego.siguientePasoCompletado(siguiente_paso)
           end
-          @juego.siguientePasoCompletado(siguiente_paso)
         end
         
         @vista.actualizarVista

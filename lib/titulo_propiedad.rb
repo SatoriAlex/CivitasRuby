@@ -109,7 +109,7 @@ module Civitas
     end
 
     def tienePropietario 
-      return ! @propietario.propiedades[self].nil?
+      return @propietario.nil? && !@propietario.propiedades[self].nil?
     end
 
     def to_s 

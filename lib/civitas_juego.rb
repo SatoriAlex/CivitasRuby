@@ -65,6 +65,12 @@ module Civitas
       titulo = casilla.tituloPropiedad
       res = jugadorActual.comprar(titulo)
       
+      if res 
+          puts "Lo has comprado"
+      else
+          puts "No lo has comprado"
+      end
+      
       return res
     end
     

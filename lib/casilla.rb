@@ -7,19 +7,27 @@ module Civitas
     attr_reader :nombre, :tituloPropiedad
     
     def initialize(nombre = nil, titulo = nil, cantidad = nil, num_casilla_carcel = nil, mazo = nil)
-      init
-      @carcel = num_casilla_carcel unless num_casilla_carcel.nil?
-      @importe = cantidad unless cantidad.nil?
-      @nombre = nombre unless nombre.nil?
+      self.init
       
-      unless titulo.nil?
-        @tituloPropiedad = titulo
-        @tipo = TipoCasilla::CALLE
+      if (cantidad.nil? && nombre.nil?)
+        @importe = cantidad
+        @nombre = nombre
+        @tipo = TipoCasilla::IMPUESTO
+      elsif (num_casilla_carcel.nil? && nombre.nil?)
+        @carcel = num_casilla_carcel
+        @nombre = nombre
+        @tipo = TipoCasilla::JUEZ
+      elsif (mazo.nil? && nombre.nil?)
+        @mazo = mazo
+        @nombre = nombre
+        @tipo = TipoCasilla::SORPRESA
+      elsif (nombre.nil?)
+        @nombre = nombre
+        @tipo = TipoCasilla::DESCANSO
       else
-        unless mazo.nil?
-          @mazo = mazo
-          @tipo = TipoCasilla::SORPRESA
-        end
+        @tituloPropiedad = titulo
+        @nombre = titulo.nombre
+        @tipo = TipoCasilla::CALLE
       end
     end 
     
@@ -31,10 +39,14 @@ module Civitas
       diario.ocurre_evento("Jugador: #{todos[actual]} Casilla: #{self.to_s}")
     end
     
-    def init
-      @nombre = "Defecto";
-      @importe = 0.0;
-      @carcel = 1;
+    def self.init
+      @carcel = -1
+      @importe = 0.0
+      @nombre = "Defecto"
+      @tituloPropiedad = nil
+      @sorpresa = nil
+      @mazo = nil
+      @tipo = nil
     end
         
     def recibeJugador_impuesto(actual, todos) 
@@ -90,7 +102,12 @@ module Civitas
     end
     
     def to_s
-      return "Nombre: #{@nombre}  Importe: #{@importe}"
+      if @importe != 0.0
+        return "\n   *---* " + @nombre + " *---*"
+                    + "  *---* Importe: " + @importe + " *---*"
+      else
+        return "\n   *---* " + @nombre + " *---*"
+      end
     end
   end
 end
