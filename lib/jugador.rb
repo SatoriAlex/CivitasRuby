@@ -308,6 +308,15 @@ module Civitas
       return salida
     end
     
+    def puedoGastar(precio) 
+      salida = false
+      
+      if !@encarcelado
+        salida = (@saldo >= precio)
+      end
+      
+      return salida
+    end
     
     private
     
@@ -352,16 +361,6 @@ module Civitas
       end
       
       return puedo_edificar_hotel
-    end
-    
-    def puedoGastar(precio) 
-      salida = false
-      
-      if !@encarcelado
-        salida = (@saldo >= precio)
-      end
-      
-      return salida
     end
   end
 end
