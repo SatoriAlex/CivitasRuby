@@ -11,16 +11,16 @@ module Civitas
       @texto = texto
     end
     
-    def aplicarAJugador(actual, todos)
-      if (super.jugadorCorrecto(actual, todos))
+    def aplicar_jugador(actual, todos)
+      if (super.jugador_correcto(actual, todos))
         super.informe(actual,todos)
         jugador = todos[actual]
 
-        posicion = @tablero.calcularTirada(jugador.getNumCasillaActual, @valor)
-        @tablero.nuevaPosicion(jugador.getNumCasillaActual, posicion)
-        jugador.moverACasilla(posicion)
-        casilla = @tablero.getCasilla(posicion)
-        casilla.recibeJugador(actual, todos)
+        posicion = @tablero.calcular_tirada(jugador.num_casilla_actual, @valor)
+        @tablero.nueva_posicion(jugador.num_casilla_actual, posicion)
+        jugador.mover_casilla(posicion)
+        casilla = @tablero.casilla(posicion)
+        casilla.recibe_jugador(actual, todos)
       end
     end
   end

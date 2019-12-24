@@ -9,10 +9,10 @@ module Civitas
       @tablero = tablero
     end
     
-    def aplicarAJugador(actual, todos) 
-      if (super.jugadorCorrecto(actual, todos))
+    def aplicar_jugador(actual, todos) 
+      if (super.jugador_correcto(actual, todos))
         super.informe(actual,todos)
-        todos[actual].encarcelar(@tablero.getCarcel());
+        todos[actual].encarcelar(@tablero.carcel);
       end
     end
   end

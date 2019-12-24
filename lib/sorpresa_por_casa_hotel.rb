@@ -10,11 +10,11 @@ module Civitas
       @texto = texto
     end
     
-    def aplicarAJugador_porCasaHotel(actual, todos)
-      if (super.jugadorCorrecto(actual, todos))
+    def aplicar_jugador_por_casa_hotel(actual, todos)
+      if (super.jugador_correcto(actual, todos))
         super.informe(actual,todos)
         jugador = todos[actual]
-        jugador.modificarSaldo(@valor * jugador.cantidadCasasHoteles)
+        jugador.modificar_saldo(@valor * jugador.cantidad_casas_hoteles)
       end
     end
   end

@@ -55,15 +55,15 @@ module Civitas
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Paseo del Prado", 205, 0.5, 395, 400, 800)));
     end
     
-    def cancelarHipoteca(ip) 
-      return self.getJugadorActual.cancelarHipoteca(ip)
+    def cancelar_hipoteca(ip) 
+      return self.jugador_actual.cancelar_hipoteca(ip)
     end
     
     def comprar
-      jugadorActual = self.getJugadorActual
-      casilla = self.getCasillaActual
+      jugador_actual = self.jugador_actual
+      casilla = self.casilla_actual
       titulo = casilla.tituloPropiedad
-      res = jugadorActual.comprar(titulo)
+      res = jugador_actual.comprar(titulo)
       
       if res 
           puts "Lo has comprado"
@@ -74,100 +74,100 @@ module Civitas
       return res
     end
     
-    def construirCasa(ip) 
-      return self.getJugadorActual.construirCasa(ip)
+    def construir_casa(ip) 
+      return self.jugador_actual.construir_casa(ip)
     end
     
-    def construirHotel(ip) 
-      return self.getJugadorActual.construirHotel(ip)
+    def construir_hotel(ip) 
+      return self.jugador_actual.construir_hotel(ip)
     end
     
-    def finalDelJuego
-      return self.getJugadorActual.enBancarrota
+    def final_del_juego
+      return self.jugador_actual.en_bancarrota
     end
     
-    def getCasillaActual 
-      return @tablero.get_casilla(self.getJugadorActual.numCasillaActual)
+    def casilla_actual 
+      return @tablero.get_casilla(self.jugador_actual.num_casilla_actual)
     end
     
-    def getJugadorActual
-      return @jugadores[@indiceJugadorActual]
+    def jugador_actual
+      return @jugadores[@indice_jugador_actual]
     end
     
     def hipotecar(ip) 
-      return self.getJugadorActual.hipotecar(ip)
+      return self.jugador_actual.hipotecar(ip)
     end
     
-    def infoJugadorTexto 
-      salida = self.getJugadorActual.to_s
+    def infoJugador_texto 
+      salida = self.jugador_actual.to_s
       
-      if self.finalDelJuego
+      if self.final_del_juego
         salida += self.ranking
       end
       
       return salida
     end
     
-    def salirCarcelPagando 
-      return self.getJugadorActual.salirCarcelPagando
+    def salir_carcel_pagando 
+      return self.jugador_actual.salir_carcel_pagando
     end
     
-    def salirCarcelTirando 
-      return self.getJugadorActual.salirCarcelTirando
+    def salir_carcel_tirando 
+      return self.jugador_actual.salir_carcel_tirando
     end
     
-    def siguientePaso 
-      jugadorActual = self.getJugadorActual
-      operacion = @gestorEstados.operaciones_permitidas(jugadorActual, @estado)
+    def siguiente_paso 
+      jugador_actual = self.jugador_actual
+      operacion = @gestorEstados.operaciones_permitidas(jugador_actual, @estado)
       
       if operacion == Operaciones_juego::PASAR_TURNO
-        self.pasarTurno
-        self.siguientePasoCompletado(operacion)
+        self.pasar_turno
+        self.siguiente_paso_completado(operacion)
       elsif operacion == Operaciones_juego::AVANZAR
-        avanzaJugador
-        self.siguientePasoCompletado(operacion)
+        avanza_jugador
+        self.siguiente_paso_completado(operacion)
       end
       
       return operacion
     end
     
-    def siguientePasoCompletado(operacion) 
-      @estado = @gestorEstados.siguiente_estado(self.getJugadorActual, @estado, operacion)
+    def siguiente_paso_completado(operacion) 
+      @estado = @gestorEstados.siguiente_estado(self.jugador_actual, @estado, operacion)
     end
     
     def vender(ip) 
-      return self.getJugadorActual.vender(ip)
+      return self.jugador_actual.vender(ip)
     end
     
     private
     
-    def avanzaJugador 
-      jugador_actual = self.getJugadorActual
+    def avanza_jugador 
+      jugador_actual = self.jugador_actual
       
-      posicion_actual = jugador_actual.numCasillaActual
+      posicion_actual = jugador_actual.num_casilla_actual
       tirada = Dado.instance.tirar
       posicion_nueva = @tablero.nueva_posicion(posicion_actual, tirada)
-      casilla = @tablero.get_casilla(posicion_nueva)
+      casilla = @tablero.casilla(posicion_nueva)
       
-      contabilizarPasosPorSalida(jugador_actual)
+      contabilizar_pasos_por_salida(jugador_actual)
       
-      jugador_actual.moverACasilla(posicion_nueva)
+      jugador_actual.mover_casilla(posicion_nueva)
       
-      casilla.recibeJugador(@indiceJugadorActual, @jugadores)
-      contabilizarPasosPorSalida(jugador_actual)
+      casilla.recibe_jugador(@indiceJugadorActual, @jugadores)
+      contabilizar_pasos_por_salida(jugador_actual)
     end
     
-    def inicializarMazoSorpresas(tablero) 
+    def inicializar_mazo_sorpresas(tablero) 
       @tablero = tablero
       @mazo = MazoSorpresa.new 
     end
     
-    def inicializarTablero(mazo) 
+    def inicializar_tablero(mazo) 
       @mazo = mazo
       @tablero = Tablero.new(30)
     end
     
-    def pasarTurno 
+    def pasar_turno 
       @indiceJugadorActual = @indiceJugadorActual + 1 % @jugadores.size
     end
     
@@ -175,8 +175,8 @@ module Civitas
       return @jugadores.sort
     end
     
-    def contabilizarPasosPorSalida(jugadorActual) 
-      jugadorActual.pasaPorSalida while @tablero.get_por_salida > 0
+    def contabilizar_pasos_por_salida(jugador_actual) 
+      jugador_actual.pasa_por_salida while @tablero.get_por_salida > 0
     end
   end
 end

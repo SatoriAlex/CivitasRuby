@@ -10,12 +10,12 @@ module Civitas
       @mazo = nil
     end
     
-    def jugadorCorrecto(actual, todos) 
+    def jugador_correcto(actual, todos) 
       return ! todos[actual].nil?
     end
     
     def informe(actual, todos) 
-      @diario.ocurre_evento("Aplicando sorpresa: #{@texto} al jugador #{todos[actual].getNombre}")
+      Diario.instance.ocurre_evento("Aplicando sorpresa: #{@texto} al jugador #{todos[actual].nombre}")
     end
     
     def to_s 

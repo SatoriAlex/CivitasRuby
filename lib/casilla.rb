@@ -15,15 +15,15 @@ module Civitas
       diario.ocurre_evento("Jugador: #{todos[actual]} Casilla: #{self.to_s}")
     end
     
-    def jugadorCorrecto(actual, todos) 
+    def jugador_correcto(actual, todos) 
       return ! todos[actual].nil?
     end
     
-    def recibeJugador(actual, todos) 
-      if self.instance_of? CasillaCalle self.recibeJugador_calle(actual, todos)
-      elsif self.instance_of? CasillaImpuesto self.recibeJugador_impuesto(actual, todos)
-      elsif self.instance_of? CasillaJuez self.recibeJugador_juez(actual, todos)
-      elsif self.instance_of? CasillaSorpresa self.recibeJugador_sorpresa(actual, todos)
+    def recibe_jugador(actual, todos) 
+      if self.instance_of? CasillaCalle self.recibe_jugador_calle(actual, todos)
+      elsif self.instance_of? CasillaImpuesto self.recibe_jugador_impuesto(actual, todos)
+      elsif self.instance_of? CasillaJuez self.recibe_jugador_juez(actual, todos)
+      elsif self.instance_of? CasillaSorpresa self.recibe_jugador_sorpresa(actual, todos)
       else
         informe(actual, todos)
       end

@@ -9,8 +9,8 @@ module Civitas
       @carcel = num_casilla_carcel
     end
     
-    def recibeJugador_juez(actual, todos)
-      if self.jugadorCorrecto(actual, todos)
+    def recibe_jugador_juez(actual, todos)
+      if self.jugador_correcto(actual, todos)
         self.informe(actual, todos)
         todos[actual].encarcelar(@carcel)
       end

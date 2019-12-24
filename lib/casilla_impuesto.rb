@@ -9,10 +9,10 @@ module Civitas
       @importe = cantidad
     end
     
-    def recibeJugador_impuesto(actual, todos) 
-      if self.jugadorCorrecto(actual, todos)
+    def recibe_jugador_impuesto(actual, todos) 
+      if self.jugador_correcto(actual, todos)
         self.informe(actual, todos)
-        todos[actual].pagaImpuesto(@importe)
+        todos[actual].paga_impuesto(@importe)
       end
     end
     

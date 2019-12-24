@@ -4,32 +4,32 @@
 
 module Civitas
   class TituloPropiedad
-    attr_reader :nombre, :hipotecado, :numCasas, :numHoteles, :precioCompra, :precioEdificar,
+    attr_reader :nombre, :hipotecado, :num_casas, :num_hoteles, :precio_compra, :precio_edificar,
                 :propietario
     
     def initialize(nom, ab, fr, hb, pc, pe)
-      @alquilerBase = ab
-      @@factorInteresesHipoteca = 1.1
-      @factorRevalorizacion = fr
-      @hipotecaBase = hb
+      @alquiler_base = ab
+      @@factor_intereses_hipoteca = 1.1
+      @factor_revalorizacion = fr
+      @hipoteca_base = hb
       @hipotecado
       @nombre = nom
-      @numCasas
-      @numHoteles
-      @precioCompra = pc
-      @precioEdificar = pe
+      @num_casas
+      @num_hoteles
+      @precio_compra = pc
+      @precio_edificar = pe
     end
 
-    def actualizarPropietarioPorConversion(jugador)
+    def actualizar_propietario_por_conversion(jugador)
         @propietario = jugador
     end
 
-    def cancelarHipoteca(jugador) 
+    def cancelar_hipoteca(jugador) 
       result = false
       
       if @hipotecado
-        if self.esEsteElPropietario(jugador)
-          @propietario.paga(self.getImporteCancelarHipoteca)
+        if self.es_este_el_propietario(jugador)
+          @propietario.paga(self.importe_cancelar_hipoteca)
           @hipotecado = false
           result = true
         end
@@ -38,69 +38,69 @@ module Civitas
       return result
     end
 
-    def cantidadCasasHoteles 
-      return @numCasas + @numHoteles
+    def cantidad_casas_hoteles 
+      return @num_casas + @num_hoteles
     end
 
     def comprar(jugador) 
       result = false
       
-      unless self.tienePropietario
-        if self.esEsteElPropietario(jugador)
+      unless self.tiene_propietario
+        if self.es_este_el_propietario(jugador)
           propietario = jugador
           result = true
-          propietario.paga(self.precioCompra)
+          propietario.paga(self.precio_compra)
         end
       end
       
       return result
     end
 
-    def construirCasa(jugador) 
+    def construir_casa(jugador) 
       result = false
       
-      if self.esEsteElPropietario(jugador)
-        @propietario.paga(self.precioEdificar)
-        @numCasas += 1
+      if self.es_este_el_propietario(jugador)
+        @propietario.paga(self.precio_edificar)
+        @num_casas += 1
         result = true
       end
       
       return result
     end
 
-    def construirHotel(jugador) 
+    def construir_hotel(jugador) 
       result = false
       
-      if self.esEsteElPropietario(jugador)
-        @propietario.paga(self.precioEdificar)
-        @numHoteles += 1
+      if self.es_este_el_propietario(jugador)
+        @propietario.paga(self.precio_edificar)
+        @num_hoteles += 1
         result = true
       end
       
       return result
     end
 
-    def derruirCasas(n, jugador) 
+    def derruir_casas(n, jugador) 
       salida = false;
       
-      if (@numCasas >= n && self.esEsteElPropietario(jugador))
-        @numCasas -= n;
+      if (@num_casas >= n && self.es_este_el_propietario(jugador))
+        @num_casas -= n;
         salida = true;
       end
       
       return salida
     end
 
-    def getImporteCancelarHipoteca 
-      return self.getImporteHipoteca * @@factorInteresesHipoteca
+    def importe_cancelar_hipoteca 
+      return self.importe_hipoteca * @@factor_intereses_hipoteca
     end
 
     def hipotecar(jugador) 
       salida = false
       
-      if !@hipotecado && self.esEsteElPropietario(jugador)
+      if !@hipotecado && self.es_este_el_propietario(jugador)
         propietario = jugador
-        propietario.recibe(self.getImporteHipoteca)
+        propietario.recibe(self.importe_hipoteca)
         @hipotecado = true
         salida = true
       end
@@ -108,27 +108,27 @@ module Civitas
       return salida
     end
 
-    def tienePropietario 
+    def tiene_propietario 
       return @propietario.nil? && !@propietario.propiedades[self].nil?
     end
 
     def to_s 
       puts "Nombre: #{@nombre} \n
-              Alquiler Base: #{@alquilerBase} \n
-              Factor Revalorizacion: #{@factorRevalorizacion} \n
-              Hipoteca Base: #{@hipotecaBase} \n
-              Precio de Compra: #{@precioCompra} \n
-              Precio de Edificacion: #{@precioEdificar} \n
+              Alquiler Base: #{@alquiler_base} \n
+              Factor Revalorizacion: #{@factor_revalorizacion} \n
+              Hipoteca Base: #{@hipoteca_base} \n
+              Precio de Compra: #{@precio_compra} \n
+              Precio de Edificacion: #{@precio_edificar} \n
               Hipotecado: #{@hipotecado} \n
-              No. Casas: #{@numCasas} \n
-              No. Hoteles: #{@numHoteles}"
+              No. Casas: #{@num_casas} \n
+              No. Hoteles: #{@num_hoteles}"
     end
 
-    def tramitarAlquiler(jugador) 
-      if (self.tienePropietario && !self.esEsteElPropietario(jugador)) 
-        precio = self.getPrecioAlquiler
+    def tramitar_alquiler(jugador) 
+      if (self.tiene_propietario && !self.es_este_el_propietario(jugador)) 
+        precio = self.precio_alquiler
         
-        jugador.pagaAlquiler(precio)
+        jugador.paga_alquiler(precio)
         @propietario.recibe(precio)
       end
     end
@@ -136,11 +136,11 @@ module Civitas
     def vender(jugador) 
       salida = false;
       
-      if (!@hipotecado && self.esEsteElPropietario(jugador))
-        jugador.recibe(self.getPrecioVenta)
+      if (!@hipotecado && self.es_este_el_propietario(jugador))
+        jugador.recibe(self.precio_venta)
         @propietario = nil
-        @numCasas = 0;
-        @numHoteles = 0;
+        @num_casas = 0;
+        @num_hoteles = 0;
         salida = true
       end
       
@@ -149,32 +149,32 @@ module Civitas
 
     private
 
-    def esEsteElPropietario(jugador) 
+    def es_este_el_propietario(jugador) 
       return @propietario == jugador
     end
 
-    def getImporteHipoteca 
-      return @hipotecaBase * (1 + (@numCasas * 0.5) + (@numHoteles * 0.5))
+    def importe_hipoteca 
+      return @hipoteca_base * (1 + (@num_casas * 0.5) + (@num_hoteles * 0.5))
     end
 
-    def getPrecioAlquiler 
+    def precio_alquiler 
       valor = 0.0
       
-      if (!@hipotecado && !@propietario.isEncarcelado)
-        valor = @alquilerBase * (1 + (@numCasas * 0.5) + (@numHoteles * 0.5))
+      if (!@hipotecado && !@propietario.is_encarcelado)
+        valor = @alquiler_base * (1 + (@num_casas * 0.5) + (@num_hoteles * 0.5))
       end
       
       return valor
     end
 
-    def getPrecioVenta 
-      return @precioCompra + (@numCasas + @numHoteles * 5) * @precioEdificar * @factorRevalorizacion
+    def precio_venta 
+      return @precio_compra + (@num_casas + @num_hoteles * 5) * @precio_edificar * @factor_revalorizacion
     end
 
-    def propietarioEncarcelado 
-      if (@propietario.isEncarcelado)
+    def propietario_encarcelado 
+      if (@propietario.is_encarcelado)
         salida = true
-      elsif (!@propietario.isEncarcelado || !self.tienePropietario)
+      elsif (!@propietario.is_encarcelado || !self.tiene_propietario)
         salida = false
       end
       

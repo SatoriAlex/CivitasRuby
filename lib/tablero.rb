@@ -8,31 +8,31 @@ require_relative 'tipo_casilla'
 
 module Civitas
   class Tablero
-    attr_reader :numCasillaCarcel
+    attr_reader :num_casilla_carcel
    
     def initialize(indice = 0) 
-      @numCasillaCarcel = indice > 1 ? indice : 1
+      @num_casilla_carcel = indice > 1 ? indice : 1
       casilla = Casilla.new("Salida")
       @casillas = []
       @casillas << casilla
-      @porSalida = 0
-      @tieneJuez = false
+      @por_salida = 0
+      @tiene_juez = false
     end
     
     private
     
     def correcto(num_casilla = 0)
       # parametro por defecto 0 porque la casilla salida siempre va estar
-      return (!@casillas[num_casilla].nil? && @casillas.size > @numCasillaCarcel && @tieneJuez)
+      return (!@casillas[num_casilla].nil? && @casillas.size > @num_casilla_carcel && @tiene_juez)
     end
     
     public
     
-    def get_por_salida
-      valor = @porSalida
+    def por_salida
+      valor = @por_salida
       
-      if @porSalida > 0
-        @porSalida -= 1
+      if @por_salida > 0
+        @por_salida -= 1
       end
       
       return valor
@@ -41,28 +41,28 @@ module Civitas
     def aniade_casilla(casilla)
       carcel = Casilla.new("Carcel")
       
-      if (@casillas.size == @numCasillaCarcel)
+      if (@casillas.size == @num_casilla_carcel)
         @casillas << carcel
       end
       
       @casillas << casilla
       
-      if (@casillas.size == @numCasillaCarcel)
+      if (@casillas.size == @num_casilla_carcel)
         @casillas << carcel
       end
     end
     
     def aniade_juez
-      juez = CasillaJuez.new(@numCasillaCarcel, "Ve a la carcel")
+      juez = CasillaJuez.new(@num_casilla_carcel, "Ve a la carcel")
       
-      unless @tieneJuez
+      unless @tiene_juez
         aniade_casilla(juez)
-        @tieneJuez = true
+        @tiene_juez = true
       end
     end
     
-    def get_casilla(numCasilla)
-      return correcto(numCasilla)? @casillas[numCasilla] : nil
+    def casilla(num_casilla)
+      return correcto(num_casilla)? @casillas[num_casilla] : nil
     end
     
     def nueva_posicion(actual, tirada)
@@ -71,7 +71,7 @@ module Civitas
       if correcto
         posicion = (actual + tirada) % @casillas.size()
         if (posicion != (actual + tirada))
-          @porSalida += 1
+          @por_salida += 1
         end
       end
       

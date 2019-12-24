@@ -9,11 +9,11 @@ module Civitas
       @mazo = mazo
     end
     
-    def recibeJugador_sorpresa(actual, todos)
-      if self.jugadorCorrecto(actual, todos)
+    def recibe_jugador_sorpresa(actual, todos)
+      if self.jugador_correcto(actual, todos)
         sorpresa = @mazo.siguiente()
         self.informe(actual, todos)
-        sorpresa.aplicarAJugador(actual, todos)
+        sorpresa.aplicar_jugador(actual, todos)
       end
     end
   end

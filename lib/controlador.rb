@@ -10,19 +10,19 @@ module Civitas
     end
     
     def juega 
-      @vista.setCivitasJuego(@juego)
+      @vista.civitas_juego(@juego)
       
-      while !@juego.finalDelJuego
+      while !@juego.final_del_juego
         @vista.pausa
         
-        siguiente_paso = @juego.siguientePaso()
-        @vista.mostrarSiguienteOperacion(siguiente_paso)
+        siguiente_paso = @juego.siguiente_paso()
+        @vista.mostrar_siguiente_operacion(siguiente_paso)
         
         if siguiente_paso != Operaciones_juego::PASAR_TURNO 
-          @vista.mostrarEventos()
+          @vista.mostrar_eventos()
         end
         
-        if !@juego.finalDelJuego
+        if !@juego.final_del_juego
           case siguiente_paso
           when Operaciones_juego::COMPRAR
             res = @vista.comprar
@@ -31,12 +31,12 @@ module Civitas
               @juego.comprar
             end
             
-            @juego.siguientePasoCompletado(siguiente_paso)
+            @juego.siguiente_paso_completado(siguiente_paso)
           when Operaciones_juego::GESTIONAR
             @vista.gestionar
             
-            gest = @vista.getGestion
-            ip = @vista.getPropiedad
+            gest = @vista.gestion
+            ip = @vista.propiedad
             
             gestion = Civitas::lista_gestiones[gest]
             
@@ -47,30 +47,30 @@ module Civitas
             elsif gestion == GestionesInmobiliarias::HIPOTECAR
               @juego.hipotecar(ip)
             elsif gestion == GestionesInmobiliarias::CANCELAR_HIPOTECA
-              @juego.cancelarHipoteca(ip)
+              @juego.cancelar_hipoteca(ip)
             elsif gestion == GestionesInmobiliarias::CONSTRUIR_CASA
-              @juego.construirCasa(ip)
+              @juego.construir_casa(ip)
             elsif gestion == GestionesInmobiliarias::CONSTRUIR_HOTEL
-              @juego.construirHotel(ip)
+              @juego.construir_hotel(ip)
             end
             
-            @juego.siguientePasoCompletado(siguiente_paso)
+            @juego.siguiente_paso_completado(siguiente_paso)
           when Operaciones_juego::SALIR_CARCEL
-            salida = @vista.salirCarcel
+            salida = @vista.salir_carcel
             
             if salida == SalidasCarcel::PAGANDO
-              @juego.salirCarcelPagando
+              @juego.salir_carcel_pagando
             else
-              @juego.salirCarcelTirando
+              @juego.salir_carcel_tirando
             end
-            @juego.siguientePasoCompletado(siguiente_paso)
+            @juego.siguiente_paso_completado(siguiente_paso)
           end
         end
         
-        @vista.actualizarVista
+        @vista.actualizar_vista
       end
     
-      @juego.infoJugadorTexto
+      @juego.info_jugador_texto
     end
   end
 end

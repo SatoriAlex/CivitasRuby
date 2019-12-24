@@ -4,7 +4,7 @@
 
 module Civitas
   class MazoSorpresa
-    attr_reader :ultimaSorpresa
+    attr_reader :ultima_sorpresa
     
     def initialize(debug = nil)
       @debug = false
@@ -49,7 +49,7 @@ module Civitas
       @usadas += 1
       s = @sorpresas.shift
       @sorpresas << s
-      @ultimaSorpresa = s
+      @ultima_sorpresa = s
       
       return s
     end

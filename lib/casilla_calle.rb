@@ -11,13 +11,13 @@ module Civitas
       @titulo_propiedad = titulo_propiedad
     end
     
-    def recibeJugador_calle(actual, todos)
-      if self.jugadorCorrecto(actual, todos) 
+    def recibe_jugador_calle(actual, todos)
+      if self.jugador_correcto(actual, todos) 
         self.informe(actual, todos)
         jugador = todos[actual]
         
-        if !@titulo_propiedad.tienePropietario 
-          jugador.puedeComprarCasilla
+        if !@titulo_propiedad.tiene_propietario 
+          jugador.puede_comprar_casilla
         else
           @titulo_propiedad.tramitarAlquiler(jugador)
         end

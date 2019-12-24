@@ -9,30 +9,30 @@ module Civitas
       @mazo = mazo
     end
     
-    def aplicarAJugador_salirCarcel(actual, todos) 
-      if (super.jugadorCorrecto(actual, todos))
+    def aplicar_jugador_salir_carcel(actual, todos) 
+      if (super.jugador_correcto(actual, todos))
         super.informe(actual,todos)
         jugador = todos[actual]
 
         for j in todos
           if j != jugador
-            encontrado = j.tieneSalvoconducto
+            encontrado = j.tiene_salvoconducto
           end
         end
 
         unless encontrado
-          todos[actual].obtenerSalvoconducto(self)
-          self.salirDelMazo
+          todos[actual].obtener_salvoconducto(self)
+          self.salir_del_mazo
         end
       end
     end
     
-    def salirDelMazo
-      @mazo.inhabilitarCartaEspecial(self)
+    def salir_del_mazo
+      @mazo.inhabilitar_carta_especial(self)
     end
     
     def usada
-      @mazo.habilitarCartaEspecial(self)
+      @mazo.habilitar_carta_especial(self)
     end
   end
 end

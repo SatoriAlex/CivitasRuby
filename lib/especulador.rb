@@ -11,7 +11,7 @@ module Civitas
       @fianza = fianza
       
       otro.propiedades.each do |propiedad|
-        propiedad.actualizarPropietarioPorConversion(self)
+        propiedad.actualizar_propietario_por_conversion(self)
       end
     end
     
@@ -23,19 +23,19 @@ module Civitas
     end
     
     
-    def encarcelar(numCasillaCarcel)
-        if !super.tieneSalvoconducto()
-            if !self.pagarFianza
-                self.moverACasilla(numCasillaCarcel);
+    def encarcelar(num_casilla_carcel)
+        if !super.tiene_salvoconducto()
+            if !self.pagar_fianza
+                self.mover_casilla(num_casilla_carcel);
                 self.encarcelado = true;
-                Diario.getInstance().ocurreEvento("El jugador ha sido encarcelado");
+                Diario.instance.ocurre_evento("El jugador ha sido encarcelado");
             end
         end
 
         return this.encarcelado
     end
 
-    def pagaImpuesto(cantidad)
+    def paga_impuesto(cantidad)
         salida = false;
 
         if !this.encarcelado
@@ -47,52 +47,52 @@ module Civitas
     
     private 
     
-    def get_casa_max
+    def casa_max
         super.CasasMax * @@factorEspeculador
     end
 
-    def get_hoteles_max
+    def hoteles_max
         super.HotelesMax * @@factorEspeculador
     end
     
-    def pagarFianza
-        puedePagar = super.puedoGastar(fianza)
+    def pagar_fianza
+        puede_pagar = super.puedo_gastar(fianza)
 
-        if puedePagar
-            modificarSaldo(-fianza)
+        if puede_pagar
+            modificar_saldo(-fianza)
         end
 
-        return puedePagar
+        return puede_pagar
     end
 
-    def puedoEdificarCasa(propiedad)
-        puedoEdificarCasa = false
+    def puedo_edificar_casa(propiedad)
+        puedo_edificar_casa = false
 
-        precio = propiedad.getPrecioEdificar
+        precio = propiedad.precio_edificar
 
-        if self.puedoGastar(precio) 
-            if propiedad.numCasas < self.get_casa_max
-                puedoEdificarCasa = true
+        if self.puedo_gastar(precio) 
+            if propiedad.num_casas < self.get_casa_max
+                puedo_edificar_casa = true
             end
         end
 
-        return puedoEdificarCasa;
+        return puedo_edificar_casa;
     end
 
-    def puedoEdificarHotel(propiedad)
-        puedoEdificarHotel = false;
+    def puedo_edificar_hotel(propiedad)
+        puedo_edificar_hotel = false;
 
-        precio = propiedad.getPrecioEdificar
+        precio = propiedad.precio_edificar
 
-        if this.puedoGastar(precio)
-            if propiedad.numHoteles < self.get_hoteles_max
-                if propiedad.getNumCasas >= Jugador.CasasPorHotel
-                    puedoEdificarHotel = true
+        if this.puedo_gastar(precio)
+            if propiedad.num_hoteles < self.get_hoteles_max
+                if propiedad.num_casas >= Jugador.CasasPorHotel
+                    puedo_edificar_hotel = true
                 end
             end
         end
 
-        return puedoEdificarHotel;
+        return puedo_edificar_hotel;
     end
   end
 end

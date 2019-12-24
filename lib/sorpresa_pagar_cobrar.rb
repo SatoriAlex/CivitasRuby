@@ -10,11 +10,11 @@ module Civitas
       @texto = texto
     end
     
-    def aplicarAJugador_pagarCobrar(actual, todos) 
-      if (super.jugadorCorrecto(actual, todos))
+    def aplicar_jugador_pagar_cobrar(actual, todos) 
+      if (super.jugador_correcto(actual, todos))
         super.informe(actual,todos)
         jugador = todos[actual]
-        jugador.modificarSaldo(@valor)
+        jugador.modificar_saldo(@valor)
       end
     end
   end

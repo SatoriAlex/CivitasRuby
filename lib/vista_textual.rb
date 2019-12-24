@@ -10,7 +10,6 @@ module Civitas
       puts estado
     end
 
-    
     def pausa
       print "Pulsa una tecla"
       STDIN.getch
@@ -43,7 +42,6 @@ module Civitas
     end
 
 
-
     def menu(titulo,lista)
       tab = "  "
       puts titulo
@@ -59,7 +57,7 @@ module Civitas
       return opcion
     end
 
-    def salirCarcel
+    def salir_carcel
       opcion = menu("Elige la forma para intentar salir de la carcel",
         ["Pagando","Tirando el dado"])
   
@@ -77,48 +75,48 @@ module Civitas
           "Construir hotel", "Terminar"]
         
       opcion = menu("Seleccione gestion inmobiliaria", acciones)
-      @iGestion = opcion
+      @i_gestion = opcion
      
       
       if acciones[opcion] != "Terminar"
-        @juegoModel.getJugadorActual.propiedades.each do |propiedad|
+        @juego_model.jugador_actual.propiedades.each do |propiedad|
           propiedades << propiedad.to_s
         end
         
-        @iPropiedad = menu("Cual propiedad quieres " + acciones[opcion] + "?",
+        @i_propiedad = menu("Cual propiedad quieres " + acciones[opcion] + "?",
                            propiedades)
       end
     end
 
-    def getGestion
-      return @iGestion
+    def gestion
+      return @i_gestion
     end
 
-    def getPropiedad
-      return @iPropiedad
+    def propiedad
+      return @i_propiedad
     end
 
-    def mostrarSiguienteOperacion(operacion)
+    def mostrar_siguiente_operacion(operacion)
       puts "->>>- Operacion permitida -<<<-"
       puts "    " + operacion.to_s
     end
 
-    def mostrarEventos
+    def mostrar_eventos
       puts "-++++- Mostrando eventos del Diario -++++-"
       puts Diario.instance.leer_evento while Diario.instance.eventos_pendientes
       puts "-++++- Fin de los eventos -++++-"
     end
 
     def setCivitasJuego(civitas)
-         @juegoModel=civitas
+         @juego_model=civitas
          self.actualizarVista
     end
 
-    def actualizarVista
+    def actualizar_vista
       puts "-***- Info Jugador -***-\n 
-           #{@juegoModel.getJugadorActual.to_s} 
+           #{@juego_model.jugador_actual.to_s} 
             -***- Casilla Actual -**-\n 
-           #{@juegoModel.getCasillaActual.to_s}\n"
+           #{@juego_model.casilla_actual.to_s}\n"
     end
 
     
