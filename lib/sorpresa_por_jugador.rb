@@ -14,13 +14,13 @@ module Civitas
       if (super.jugador_correcto(actual, todos))
         super.informe(actual,todos)
         jugador = todos[actual]
-        pago =  SorpresaPagarCobrar.new( -1*@valor, @texto)
+        pago = SorpresaPagarCobrar.new(-1 * @valor, @texto)
 
         for j in todos
           pago.aplicar_jugador(j, todos) if j != jugador
         end
 
-        cobro =  SorpresaPagarCobrar.new((todos.size-1)*@valor, @texto)
+        cobro = SorpresaPagarCobrar.new((todos.size-1) * @valor, @texto)
         cobro.aplicar_jugador(actual, todos)
       end
     end

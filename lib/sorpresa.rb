@@ -11,7 +11,7 @@ module Civitas
     end
     
     def jugador_correcto(actual, todos) 
-      return ! todos[actual].nil?
+      return !todos[actual].nil?
     end
     
     def informe(actual, todos) 

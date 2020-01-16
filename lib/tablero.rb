@@ -10,7 +10,7 @@ module Civitas
   class Tablero
     attr_reader :num_casilla_carcel
    
-    def initialize(indice = 0) 
+    def initialize(indice) 
       @num_casilla_carcel = indice > 1 ? indice : 1
       casilla = Casilla.new("Salida")
       @casillas = []

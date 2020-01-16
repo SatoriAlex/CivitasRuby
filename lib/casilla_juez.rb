@@ -10,10 +10,7 @@ module Civitas
     end
     
     def recibe_jugador_juez(actual, todos)
-      if self.jugador_correcto(actual, todos)
-        self.informe(actual, todos)
         todos[actual].encarcelar(@carcel)
-      end
     end
   end
 end

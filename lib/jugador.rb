@@ -261,9 +261,9 @@ module Civitas
     end
     
     def salir_carcel_tirando 
-      salida = false
+      salida = Dado.instance.salgo_de_la_carcel
       
-      if !@encarcelado
+      if salida
         @encarcelado = false
         Diario.instance.ocurre_evento("El jugador ha salido de la carcel")
       end
@@ -283,7 +283,13 @@ module Civitas
       salida = false
       
       if !@encarcelado
-        salida = self.modificar_saldo(cantidad)
+        if self.existe_la_propiedad(ip) && @propiedades[ip].vender(self)
+          @propiedades.delete_at(ip)
+          Diario.instance.ocurre_evento("Se ha venido la propiedad")
+          salida = true
+        end
+        
+        return salida
       end
       
       return salida
@@ -298,9 +304,8 @@ module Civitas
     def debe_ser_encarcelado 
       salida = false
       
-      if !@encarcelado && !self.tiene_salvoconducto
-        salida = true
-      elsif self.tiene_salvoconducto
+      if salida && self.tiene_salvoconducto
+        salida = false
         self.perder_salvoconducto
         Diario.instance.ocurre_evento("El jugador se ha librado de la carcel")
       end

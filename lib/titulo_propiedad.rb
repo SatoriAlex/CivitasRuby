@@ -18,6 +18,7 @@ module Civitas
       @num_hoteles
       @precio_compra = pc
       @precio_edificar = pe
+      @propietario = nil
     end
 
     def actualizar_propietario_por_conversion(jugador)
@@ -154,14 +155,14 @@ module Civitas
     end
 
     def importe_hipoteca 
-      return @hipoteca_base * (1 + (@num_casas * 0.5) + (@num_hoteles * 0.5))
+      return @hipoteca_base * (1 + (@num_casas * 0.5) + (@num_hoteles * 2.5))
     end
 
     def precio_alquiler 
       valor = 0.0
       
       if (!@hipotecado && !@propietario.is_encarcelado)
-        valor = @alquiler_base * (1 + (@num_casas * 0.5) + (@num_hoteles * 0.5))
+        valor = @alquiler_base * (1 + (@num_casas * 0.5) + (@num_hoteles * 2.5))
       end
       
       return valor
@@ -172,10 +173,10 @@ module Civitas
     end
 
     def propietario_encarcelado 
-      if (@propietario.is_encarcelado)
-        salida = true
-      elsif (!@propietario.is_encarcelado || !self.tiene_propietario)
-        salida = false
+      salida = false
+      
+      if (self.tiene_propietario)
+        salida = @propietario.is_encarcelado
       end
       
       return salida
