@@ -118,6 +118,7 @@ module Civitas
       posicion_actual = jugador_actual.num_casilla_actual
       tirada = Dado.instance.tirar
       posicion_nueva = @tablero.nueva_posicion(posicion_actual, tirada)
+      
       casilla = @tablero.casilla(posicion_nueva)
       
       contabilizar_pasos_por_salida(jugador_actual)

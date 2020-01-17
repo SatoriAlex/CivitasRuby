@@ -27,8 +27,6 @@ module Civitas
         elsif self.instance_of? CasillaImpuesto self.recibe_jugador_impuesto(actual, todos)
         elsif self.instance_of? CasillaJuez self.recibe_jugador_juez(actual, todos)
         elsif self.instance_of? CasillaSorpresa self.recibe_jugador_sorpresa(actual, todos)
-        # else
-        #  informe(actual, todos)
         end
       end
     end

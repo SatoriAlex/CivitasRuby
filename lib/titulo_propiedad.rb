@@ -28,12 +28,10 @@ module Civitas
     def cancelar_hipoteca(jugador) 
       result = false
       
-      if @hipotecado
-        if self.es_este_el_propietario(jugador)
+      if @hipotecado && self.es_este_el_propietario(jugador)
           @propietario.paga(self.importe_cancelar_hipoteca)
           @hipotecado = false
           result = true
-        end
       end
       
       return result
@@ -47,11 +45,9 @@ module Civitas
       result = false
       
       unless self.tiene_propietario
-        if self.es_este_el_propietario(jugador)
-          propietario = jugador
+          @propietario = jugador
           result = true
-          propietario.paga(self.precio_compra)
-        end
+          @propietario.paga(@precio_compra)
       end
       
       return result
@@ -61,7 +57,7 @@ module Civitas
       result = false
       
       if self.es_este_el_propietario(jugador)
-        @propietario.paga(self.precio_edificar)
+        @propietario.paga(@precio_edificar)
         @num_casas += 1
         result = true
       end
@@ -73,7 +69,7 @@ module Civitas
       result = false
       
       if self.es_este_el_propietario(jugador)
-        @propietario.paga(self.precio_edificar)
+        @propietario.paga(@precio_edificar)
         @num_hoteles += 1
         result = true
       end

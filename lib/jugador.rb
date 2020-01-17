@@ -127,7 +127,7 @@ module Civitas
         if puedo_edificar_hotel
           result = propiedad.construir_hotel(self)
           
-          casas_por_hotel = self.casas_por_hotel
+          casas_por_hotel = @@casas_por_hotel
           propiedad.derruir_casas(casas_por_hotel, self)
           Diario.instance.ocurre_evento("El jugador #{@nombre} construye hotel en la propiedad #{ip}")
         end
@@ -344,7 +344,7 @@ module Civitas
       precio = propiedad.precio_edificar
       
       if self.puedo_gastar(precio)
-        if propiedad.num_casas < self.casas_max
+        if propiedad.num_casas < @@casas_max
           puedo_edificar_casa = true
         end
       end
@@ -358,8 +358,8 @@ module Civitas
       precio = propiedad.precio_edificar
       
       if self.puedo_gastar(precio)
-        if propiedad.num_hoteles < self.hoteles_max
-          if propiedad.num_casas >= self.casas_por_hotel
+        if propiedad.num_hoteles < @@hoteles_max
+          if propiedad.num_casas >= @@casas_por_hotel
             puedo_edificar_hotel = true
           end
         end

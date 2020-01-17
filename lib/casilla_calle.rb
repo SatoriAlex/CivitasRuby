@@ -2,6 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+require_relative 'titulo_propiedad'
+
 module Civitas
   class CasillaCalle < Casilla
     attr_reader :titulo_propiedad
