@@ -4,7 +4,7 @@
 
 module Civitas
   class Sorpresa
-    def self.init
+    def initialize
       @valor = -1
       @tablero = nil
       @mazo = nil
@@ -19,7 +19,7 @@ module Civitas
     end
     
     def to_s 
-        return @texto;
+      puts "*--* Texto: #{@texto} *--*";
     end
     
     private_class_method :new

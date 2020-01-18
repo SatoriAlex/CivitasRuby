@@ -4,13 +4,20 @@
 
 module Civitas
   class CasillaJuez < Casilla
+    alias :super_informe :informe
+    
     def initialize (num_casilla_carcel, nombre)
       super(nombre)
       @carcel = num_casilla_carcel
     end
     
     def recibe_jugador_juez(actual, todos)
-        todos[actual].encarcelar(@carcel)
+      super_informe(actual, todos)
+      todos[actual].encarcelar(@carcel)
+    end
+    
+    def to_s
+      puts "\n   *---* Casilla Juez: #{@nombre} *---*";
     end
   end
 end

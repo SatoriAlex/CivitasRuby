@@ -4,15 +4,18 @@
 
 module Civitas
   class SorpresaPorJugador < Sorpresa
+    alias :super_jugador_correcto :jugador_correcto
+    alias :super_informe :informe
+    
     def initialize(valor, texto)
-      super.init
+      super
       @valor = valor
       @texto = texto
     end
     
-    def aplicar_jugador_por_jugador(actual, todos) 
-      if (super.jugador_correcto(actual, todos))
-        super.informe(actual,todos)
+    def aplicar_jugador(actual, todos) 
+      if (super_jugador_correcto(actual, todos))
+        super_informe(actual,todos)
         jugador = todos[actual]
         pago = SorpresaPagarCobrar.new(-1 * @valor, @texto)
 
@@ -24,5 +27,11 @@ module Civitas
         cobro.aplicar_jugador(actual, todos)
       end
     end
+    
+    def to_s
+      puts super + "\n *--* Valor: #{@valor} *--*"
+    end
+    
+    public_class_method :new
   end
 end

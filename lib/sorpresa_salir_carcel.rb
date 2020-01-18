@@ -4,14 +4,18 @@
 
 module Civitas
   class SorpresaSalirCarcel < Sorpresa
+    alias :super_jugador_correcto :jugador_correcto
+    alias :super_informe :informe
+    
     def initialize(mazo)
-      super.init
+      super
       @mazo = mazo
+      @texto = "Salir de la carcel"
     end
     
-    def aplicar_jugador_salir_carcel(actual, todos) 
-      if (super.jugador_correcto(actual, todos))
-        super.informe(actual,todos)
+    def aplicar_jugador(actual, todos) 
+      if (super_jugador_correcto(actual, todos))
+        super_informe(actual,todos)
         jugador = todos[actual]
 
         for j in todos
@@ -34,5 +38,11 @@ module Civitas
     def usada
       @mazo.habilitar_carta_especial(self)
     end
+    
+    def to_s
+      puts super
+    end
+    
+    public_class_method :new
   end
 end

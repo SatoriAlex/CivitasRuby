@@ -4,16 +4,26 @@
 
 module Civitas
   class SorpresaIrCarcel < Sorpresa
+    alias :super_jugador_correcto :jugador_correcto
+    alias :super_informe :informe
+    
     def initialize(tablero)
-      super.init
+      super
       @tablero = tablero
+      @texto = "Ir a la Carcel"
     end
     
     def aplicar_jugador(actual, todos) 
-      if (super.jugador_correcto(actual, todos))
-        super.informe(actual,todos)
+      if (super_jugador_correcto(actual, todos))
+        super_informe(actual,todos)
         todos[actual].encarcelar(@tablero.carcel);
       end
     end
+    
+    def to_s
+      puts super
+    end
+    
+    public_class_method :new
   end
 end

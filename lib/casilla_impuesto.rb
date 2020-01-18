@@ -4,18 +4,20 @@
 
 module Civitas
   class CasillaImpuesto < Casilla
+    alias :super_informe :informe
+    
     def initialize(cantidad, nombre)
       super(nombre)
       @importe = cantidad
     end
     
     def recibe_jugador_impuesto(actual, todos) 
-        todos[actual].paga_impuesto(@importe)
+      super_informe(actual, todos)
+      todos[actual].paga_impuesto(@importe)
     end
     
     def to_s
-      return "\n   *---* " + @nombre + " *---*"
-      + "  *---* Importe: " + @importe + " *---*"
+      puts super + "  *---* Importe: " + @importe + " *---*"
     end
   end
 end

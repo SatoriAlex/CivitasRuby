@@ -7,6 +7,7 @@ require_relative 'titulo_propiedad'
 module Civitas
   class CasillaCalle < Casilla
     attr_reader :titulo_propiedad
+    alias :super_informe :informe
     
     def initialize(titulo_propiedad)
       super(titulo_propiedad.nombre)
@@ -14,6 +15,7 @@ module Civitas
     end
     
     def recibe_jugador_calle(actual, todos)
+      super_informe(actual, todos)
       jugador = todos[actual]
 
       if !@titulo_propiedad.tiene_propietario 
@@ -21,6 +23,10 @@ module Civitas
       else
         @titulo_propiedad.tramitarAlquiler(jugador)
       end
+    end
+    
+    def to_s 
+      puts "\n   *---* Nombre de la propiedad: #{@nombre} *---*"
     end
   end
 end
