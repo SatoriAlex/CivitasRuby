@@ -107,7 +107,7 @@ module Civitas
       puts "-++++- Fin de los eventos -++++-"
     end
 
-    def setCivitasJuego(civitas)
+    def civitas_juego(civitas)
          @juego_model=civitas
          self.actualizarVista
     end

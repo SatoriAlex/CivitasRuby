@@ -15,7 +15,7 @@ module Civitas
       while !@juego.final_del_juego
         @vista.pausa
         
-        siguiente_paso = @juego.siguiente_paso()
+        siguiente_paso = @juego.siguiente_paso
         @vista.mostrar_siguiente_operacion(siguiente_paso)
         
         if siguiente_paso != Operaciones_juego::PASAR_TURNO 
@@ -63,6 +63,7 @@ module Civitas
             else
               @juego.salir_carcel_tirando
             end
+            
             @juego.siguiente_paso_completado(siguiente_paso)
           end
         end
