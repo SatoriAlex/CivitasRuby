@@ -3,6 +3,7 @@
 # and open the template in the editor.
 
 require_relative 'titulo_propiedad'
+require_relative 'jugador'
 
 module Civitas
   class CasillaCalle < Casilla
@@ -12,6 +13,7 @@ module Civitas
     def initialize(titulo_propiedad)
       super(titulo_propiedad.nombre)
       @titulo_propiedad = titulo_propiedad
+      @importe = titulo_propiedad.precio_compra
     end
     
     def recibe_jugador_calle(actual, todos)
@@ -26,7 +28,8 @@ module Civitas
     end
     
     def to_s 
-      puts "\n   *---* Nombre de la propiedad: #{@nombre} *---*"
+      puts "\n   *---* Nombre de la propiedad: #{@nombre} *---*" + 
+           "\n  *---* Importe: #{@importe} *---*" 
     end
   end
 end

@@ -8,6 +8,20 @@ require_relative 'dado'
 require_relative 'tablero'
 require_relative 'mazo_sorpresa'
 
+require_relative 'casilla'
+require_relative 'casilla_calle'
+require_relative 'casilla_impuesto'
+require_relative 'casilla_sorpresa'
+
+require_relative 'sorpresa_pagar_cobrar'
+require_relative 'sorpresa_casilla'
+require_relative 'sorpresa_por_casa_hotel'
+require_relative 'sorpresa_por_jugador'
+require_relative 'sorpresa_salir_carcel'
+require_relative 'sorpresa_ir_carcel'
+require_relative 'sorpresa_jugador_especulador'
+
+
 module Civitas
   class CivitasJuego
     def initialize(nombres)
@@ -22,8 +36,9 @@ module Civitas
       @gestorEstados = Gestor_estados.new
       @estado = @gestorEstados.estado_inicial
       @indiceJugadorActual = Dado.instance.quien_empieza(total_jugadores)
-      self.inicializarTablero(MazoSorpresa.new())
-      self.inicializarMazoSorpresas(Tablero.new(9))
+      inicializar_tablero(MazoSorpresa.new())
+      inicializar_mazo_sorpresas(@tablero)
+      @forzar = false
     end
     
     def cancelar_hipoteca(ip) 
@@ -34,12 +49,11 @@ module Civitas
       jugador_actual = self.jugador_actual
       casilla = self.casilla_actual
       titulo = casilla.tituloPropiedad
-      res = jugador_actual.comprar(titulo)
       
-      if res 
-          puts "Lo has comprado"
+      if titulo.tiene_propietario 
+        res = false
       else
-          puts "No lo has comprado"
+        res = jugador_actual.comprar(titulo)
       end
       
       return res
@@ -54,7 +68,21 @@ module Civitas
     end
     
     def final_del_juego
-      return self.jugador_actual.en_bancarrota
+      salida = false
+      
+      unless !@forzar
+        @jugadores.each { |j|
+          salida = j.en_bancarrota
+          
+          if salida
+            break
+          end
+        }
+      else
+        salida = @forzar
+      end
+      
+      return salida
     end
     
     def casilla_actual 
@@ -130,8 +158,6 @@ module Civitas
     end
     
     def inicializar_mazo_sorpresas(tablero) 
-      @tablero = tablero
-      
       @mazo.al_mazo(SorpresaPagarCobrar.new(-200, "Paga el impuesto de lujo"))
       @mazo.al_mazo(SorpresaPagarCobrar.new(200, "Cobra"))
 
@@ -153,6 +179,7 @@ module Civitas
     end
     
     def inicializar_tablero(mazo) 
+      @tablero = Tablero.new(9)
       @mazo = mazo
       
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Ronda de Valencia", 35, 0.5, 55, 60, 120)))
@@ -175,7 +202,7 @@ module Civitas
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Calle de Cea Bermudez", 125, 0.5, 235, 240, 480)))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Avenida de los Reyes Catolicos", 135, 0.5, 255, 260, 520)))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Plaza de Espana", 145, 0.5, 275, 280, 560)))
-      @tablero.aniadeJuez()
+      @tablero.aniade_juez
 
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Puerta del Sol", 155, 0.5, 295, 300, 600)))
       @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))

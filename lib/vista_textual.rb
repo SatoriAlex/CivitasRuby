@@ -109,7 +109,7 @@ module Civitas
 
     def civitas_juego(civitas)
          @juego_model=civitas
-         self.actualizarVista
+         self.actualizar_vista
     end
 
     def actualizar_vista

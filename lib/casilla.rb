@@ -2,6 +2,13 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+require_relative 'diario'
+require_relative 'casilla_calle'
+require_relative 'casilla_impuesto'
+require_relative 'casilla_juez'
+require_relative 'casilla_sorpresa'
+
+
 module Civitas
   class Casilla
     attr_reader :nombre

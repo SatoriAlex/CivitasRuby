@@ -209,6 +209,7 @@ module Civitas
       
       if !@encarcelado
         salida = self.paga(cantidad)
+        Diario.instance.ocurre_evento("El jugador paga el alquiler")
       end
       
       return salida
@@ -219,6 +220,7 @@ module Civitas
       
       if !@encarcelado
         salida = self.paga(cantidad)
+        Diario.instance.ocurre_evento("El jugador paga el impuesto")
       end
       
       return salida
@@ -242,6 +244,7 @@ module Civitas
       
       if !@encarcelado
         salida = self.modificar_saldo(cantidad)
+        Diario.instance.ocurre_evento("El jugador recibe el pago")
       end
       
       return salida
@@ -254,7 +257,7 @@ module Civitas
         salida = true
         self.paga(200)
         @encarcelado = false
-        Diario.instance.ocurre_evento("El jugador ha salido de la carcel")
+        Diario.instance.ocurre_evento("El jugador ha salido de la carcel pagando")
       end
       
       return salida
@@ -265,7 +268,7 @@ module Civitas
       
       if salida
         @encarcelado = false
-        Diario.instance.ocurre_evento("El jugador ha salido de la carcel")
+        Diario.instance.ocurre_evento("El jugador ha salido de la carcel tirando")
       end
       
       return salida
@@ -285,7 +288,7 @@ module Civitas
       if !@encarcelado
         if self.existe_la_propiedad(ip) && @propiedades[ip].vender(self)
           @propiedades.delete_at(ip)
-          Diario.instance.ocurre_evento("Se ha venido la propiedad")
+          Diario.instance.ocurre_evento("Se ha venido la propiedad #{@propiedades[ip].nombre}")
           salida = true
         end
         
@@ -302,12 +305,14 @@ module Civitas
     protected
     
     def debe_ser_encarcelado 
-      salida = false
+      salida = true
       
-      if salida && self.tiene_salvoconducto
-        salida = false
-        self.perder_salvoconducto
-        Diario.instance.ocurre_evento("El jugador se ha librado de la carcel")
+      unless @encarcelado 
+        if self.tiene_salvoconducto
+          salida = false
+          self.perder_salvoconducto
+          Diario.instance.ocurre_evento("El jugador se ha librado de la carcel")
+        end
       end
       
       return salida

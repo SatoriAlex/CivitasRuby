@@ -2,6 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+require_relative 'jugador'
+
 module Civitas
   class CasillaJuez < Casilla
     alias :super_informe :informe
@@ -17,7 +19,8 @@ module Civitas
     end
     
     def to_s
-      puts "\n   *---* Casilla Juez: #{@nombre} *---*";
+      puts "\n   *---* Casilla Juez: #{@nombre} *---*" + 
+           "\n  *---* Numero: #{@carcel} *---*" 
     end
   end
 end

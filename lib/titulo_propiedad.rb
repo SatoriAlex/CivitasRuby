@@ -29,9 +29,9 @@ module Civitas
       result = false
       
       if @hipotecado && self.es_este_el_propietario(jugador)
-          @propietario.paga(self.importe_cancelar_hipoteca)
-          @hipotecado = false
-          result = true
+        @propietario.paga(self.importe_cancelar_hipoteca)
+        @hipotecado = false
+        result = true
       end
       
       return result

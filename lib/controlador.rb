@@ -2,6 +2,10 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+require_relative 'civitas_juegos'
+require_relative 'vista_textual'
+require_relative 'gestiones_inmobiliarias'
+
 module Civitas
   class Controlador
     def initialize(juego, vista)
@@ -52,9 +56,9 @@ module Civitas
               @juego.construir_casa(ip)
             elsif gestion == GestionesInmobiliarias::CONSTRUIR_HOTEL
               @juego.construir_hotel(ip)
+            else
+              @juego.siguiente_paso_completado(siguiente_paso)
             end
-            
-            @juego.siguiente_paso_completado(siguiente_paso)
           when Operaciones_juego::SALIR_CARCEL
             salida = @vista.salir_carcel
             

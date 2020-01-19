@@ -2,13 +2,15 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+require_relative 'sorpresa'
+
 module Civitas
   class SorpresaIrCarcel < Sorpresa
     alias :super_jugador_correcto :jugador_correcto
     alias :super_informe :informe
     
     def initialize(tablero)
-      super
+      super()
       @tablero = tablero
       @texto = "Ir a la Carcel"
     end

@@ -2,15 +2,24 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+require_relative 'jugador'
+require_relative 'diario'
+
 module Civitas
   class Especulador < Jugador
     alias :super_tiene_salvoconducto :tiene_salvoconducto
+    alias :super_perder_salvoconducto :perder_salvoconducto
+    alias :super_puedo_gastar :puedo_gastar
+    alias :super_modificar_saldo :modificar_saldo
+    
+    attr_reader :fianza, :especulador
     
     @@factorEspeculador = 2
     
     def initialize(otro, fianza)
       super(otro)
       @fianza = fianza
+      @especulador = true
       
       otro.propiedades.each do |propiedad|
         propiedad.actualizar_propietario_por_conversion(self)
@@ -25,43 +34,53 @@ module Civitas
     end
     
     def encarcelar(num_casilla_carcel)
-        if !super_tiene_salvoconducto && !self.pagar_fianza
-          self.mover_casilla(num_casilla_carcel);
-          @encarcelado = true;
-          Diario.instance.ocurre_evento("El jugador ha sido encarcelado");
+      resultado = false
+      
+      unless @encarcelado
+        if !super_tiene_salvoconducto
+          super_perder_salvoconducto
+          Diario.instance.ocurre_evento("El jugador #{@nombre} se libra de la cacel y pierde salvoconducto")
+        elsif super_puedo_gastar(@fianza)
+          super_modificar_saldo(-@fianza)
+          Diario.instance.ocurre_evento("El jugador ha pagado la fianza y se libra de la carcel")
+        else
+          resultado = true
         end
-
-        return @encarcelado
+      end
+      
+      return resultado
     end
 
     def paga_impuesto(cantidad)
-        salida = false;
+      salida = false;
 
-        if !this.encarcelado
-            salida = self.paga(cantidad/2)
-        end
+      if !this.encarcelado
+        salida = self.paga(cantidad/2)
+        Diario.instance.ocurre_evento("El jugador paga #{cantidad/2} de impuesto")
+      end
 
-        return salida
+      return salida
     end
     
     private 
     
     def casa_max
-        super.CasasMax * @@factorEspeculador
+      super.CasasMax * @@factorEspeculador
     end
 
     def hoteles_max
-        super.HotelesMax * @@factorEspeculador
+      super.HotelesMax * @@factorEspeculador
     end
     
     def pagar_fianza
-        puede_pagar = super.puedo_gastar(fianza)
+      puede_pagar = super.puedo_gastar(fianza)
 
-        if puede_pagar
-            modificar_saldo(-fianza)
-        end
+      if puede_pagar
+        modificar_saldo(-fianza)
+        Diario.instance.ocurre_evento("El jugador ha pagado la fianza y se ha librado de la carcel")
+      end
 
-        return puede_pagar
+      return puede_pagar
     end
   end
 end

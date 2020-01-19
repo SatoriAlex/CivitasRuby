@@ -4,6 +4,7 @@
 
 
 require_relative 'casilla'
+require_relative 'casilla_juez'
 require_relative 'tipo_casilla'
 
 module Civitas
@@ -79,7 +80,13 @@ module Civitas
     end
     
     def calcular_tirada(origen, destino)
-      return ((destino - origen) + @casilla.size)
+      valor = (destino - origen)
+      
+      if valor < 0
+        valor += @casillas.size
+      end
+      
+      return valor
     end
   end
 end

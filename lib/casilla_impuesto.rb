@@ -2,6 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+require_relative 'jugador'
+
 module Civitas
   class CasillaImpuesto < Casilla
     alias :super_informe :informe
