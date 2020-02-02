@@ -16,7 +16,7 @@ module Civitas
       @importe = titulo_propiedad.precio_compra
     end
     
-    def recibe_jugador_calle(actual, todos)
+    def recibe_jugador(actual, todos)
       super_informe(actual, todos)
       jugador = todos[actual]
 

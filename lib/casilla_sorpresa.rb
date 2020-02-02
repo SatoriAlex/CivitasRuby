@@ -13,7 +13,7 @@ module Civitas
       @mazo = mazo
     end
     
-    def recibe_jugador_sorpresa(actual, todos)
+    def recibe_jugador(actual, todos)
       super_informe(actual, todos)
       sorpresa = @mazo.siguiente()
       sorpresa.aplicar_jugador(actual, todos)

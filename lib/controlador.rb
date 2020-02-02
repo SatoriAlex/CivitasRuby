@@ -2,9 +2,11 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-require_relative 'civitas_juegos'
-require_relative 'vista_textual'
+require_relative 'operacion_inmobiliaria'
+require_relative 'operaciones_juego'
+require_relative 'respuestas'
 require_relative 'gestiones_inmobiliarias'
+require_relative 'salidas_carcel'
 
 module Civitas
   class Controlador
@@ -17,6 +19,7 @@ module Civitas
       @vista.civitas_juego(@juego)
       
       while !@juego.final_del_juego
+        @vista.actualizar_vista
         @vista.pausa
         
         siguiente_paso = @juego.siguiente_paso
@@ -71,8 +74,6 @@ module Civitas
             @juego.siguiente_paso_completado(siguiente_paso)
           end
         end
-        
-        @vista.actualizar_vista
       end
     
       @juego.info_jugador_texto

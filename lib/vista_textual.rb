@@ -66,7 +66,7 @@ module Civitas
     
     def comprar
       opcion = menu("¿Quiere comprar la calle?", ["Si", "No"])
-      return lista_respuestas[opcion]
+      return $lista_respuestas[opcion]
     end
 
     def gestionar
@@ -108,15 +108,15 @@ module Civitas
     end
 
     def civitas_juego(civitas)
-         @juego_model=civitas
-         self.actualizar_vista
+      @juego_model=civitas
+      #self.actualizar_vista
     end
 
     def actualizar_vista
-      puts "-***- Info Jugador -***-\n 
-           #{@juego_model.jugador_actual.to_s} 
-            -***- Casilla Actual -**-\n 
-           #{@juego_model.casilla_actual.to_s}\n"
+      puts "-***- Info Jugador -***-" 
+      puts "#{@juego_model.jugador_actual.to_s}\n"
+      puts "-***- Casilla Actual -**-"
+      puts "#{@juego_model.casilla_actual.to_s}\n"
     end
 
     

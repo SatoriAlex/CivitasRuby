@@ -13,7 +13,7 @@ module Civitas
       @importe = cantidad
     end
     
-    def recibe_jugador_impuesto(actual, todos) 
+    def recibe_jugador(actual, todos) 
       super_informe(actual, todos)
       todos[actual].paga_impuesto(@importe)
     end

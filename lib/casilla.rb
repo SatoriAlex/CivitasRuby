@@ -3,13 +3,9 @@
 # and open the template in the editor.
 
 require_relative 'diario'
-require_relative 'casilla_calle'
-require_relative 'casilla_impuesto'
-require_relative 'casilla_juez'
-require_relative 'casilla_sorpresa'
 
 
-module Civitas
+module Civitas 
   class Casilla
     attr_reader :nombre
     
@@ -23,22 +19,19 @@ module Civitas
     end
     
     def jugador_correcto(actual, todos) 
-      return ! todos[actual].nil?
+      return !todos[actual].nil?
     end
     
     def recibe_jugador(actual, todos) 
-      if self.jugador_correcto(actual, todos)       
-        if self.instance_of? CasillaCalle self.recibe_jugador_calle(actual, todos)
-        elsif self.instance_of? CasillaImpuesto self.recibe_jugador_impuesto(actual, todos)
-        elsif self.instance_of? CasillaJuez self.recibe_jugador_juez(actual, todos)
-        elsif self.instance_of? CasillaSorpresa self.recibe_jugador_sorpresa(actual, todos)
+      if self.jugador_correcto(actual, todos)
+        if !self.instance_of? Casilla self.recibe_jugador(actual, todos)
         else self.informe(actual, todos)
         end
       end
     end
     
     def to_s
-      puts "\n   *---* " + @nombre + " *---*"
+      puts "\n*---* " + @nombre + " *---*"
     end
   end
 end

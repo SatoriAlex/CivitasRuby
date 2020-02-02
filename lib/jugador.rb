@@ -17,13 +17,15 @@ module Civitas
       @@saldo_inicial = 7500
       @num_casilla_actual = 0
       @saldo = @@saldo_inicial
+      @propiedades = []
       
       unless otro.nil?
         @encarcelado = otro.encarcelado
         @nombre = otro.nombre
         @num_casilla_actual = otro.numCasillaActual
-        @puede_comprar = otro.puedeComprar
+        @puede_comprar = otro.puede_comprar
         @saldo = otro.saldo
+        @propiedades = otro.propiedades
       end
       
       @nombre = nombre unless nombre.nil?
@@ -74,18 +76,18 @@ module Civitas
         return result
       end
       
-      if @puedeComprar
+      if @puede_comprar
         precio = titulo.precio_compra
         
         if self.puedo_gastar(precio)
-          result = titulo.comprar(jugador)
+          result = titulo.comprar(self)
           
           if result
             @propiedades << titulo
             Diario.instance.ocurre_evento("El jugador #{@nombre} compra la propiedad #{titulo.to_s}")
           end
           
-          @puedeComprar = false
+          @puede_comprar = false
         end
       end
       
@@ -182,7 +184,7 @@ module Civitas
       if !@encarcelado
         @num_casilla_actual = num_casilla
         @puedo_comprar = false
-        Diario.instance.ocurre_evento("Se ha movido el jugador #{numCasilla} casillas")
+        Diario.instance.ocurre_evento("Se ha movido el jugador #{num_casilla} casillas")
         salida = true
       end
       
@@ -274,7 +276,7 @@ module Civitas
       return salida
     end
     
-    def tiene_algo_que_gestionar 
+    def tiene_algo_que_gestionar
       return !@propiedades.empty?
     end
     
@@ -299,7 +301,17 @@ module Civitas
     end
     
     def to_s() 
-      return "Nombre: #{@nombre}" 
+      s = "\nNombre: #{@nombre} \nSaldo #{@@saldo_inicial} \n*---* Propiedades *---*\n" 
+      
+      if !@propiedades.empty?
+        @propiedades.each { |n|
+          s += n.to_s + "\n"
+        }
+      else
+        s += "No tiene propiedades\n"
+      end
+      
+      return s
     end
     
     protected

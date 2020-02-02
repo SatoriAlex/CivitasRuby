@@ -11,7 +11,9 @@ module Civitas
       CONSTRUIR_HOTEL = :construir_hotel
       TERMINAR = :terminar
     end
-    lista_gestiones = [GestionesInmobiliarias::VENDER, GestionesInmobiliarias::HIPOTECAR, 
-        GestionesInmobiliarias::CANCELAR_HIPOTECA, GestionesInmobiliarias::CONSTRUIR_CASA, 
-        GestionesInmobiliarias::CONSTRUIR_HOTEL, TERMINAR]
+    
+    $lista_gestiones = [Civitas::GestionesInmobiliarias::VENDER, Civitas::GestionesInmobiliarias::HIPOTECAR, 
+        Civitas::GestionesInmobiliarias::CANCELAR_HIPOTECA, Civitas::GestionesInmobiliarias::CONSTRUIR_CASA, 
+        Civitas::GestionesInmobiliarias::CONSTRUIR_HOTEL, Civitas::GestionesInmobiliarias::TERMINAR]
 end
+

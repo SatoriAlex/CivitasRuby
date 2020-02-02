@@ -7,5 +7,5 @@ module Civitas
     NO = :no
     SI = :si  
   end
-  lista_respuestas = [Respuestas::NO, Respuestas::SI]
+  $lista_respuestas = [Respuestas::SI, Respuestas::NO]
 end

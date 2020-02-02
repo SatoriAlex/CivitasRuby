@@ -13,7 +13,7 @@ module Civitas
       @carcel = num_casilla_carcel
     end
     
-    def recibe_jugador_juez(actual, todos)
+    def recibe_jugador(actual, todos)
       super_informe(actual, todos)
       todos[actual].encarcelar(@carcel)
     end

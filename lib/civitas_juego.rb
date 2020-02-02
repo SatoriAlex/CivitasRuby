@@ -2,23 +2,22 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-require_relative 'jugador'
-require_relative 'gestor_estados'
 require_relative 'dado'
-require_relative 'tablero'
+require_relative 'gestor_estados'
+require_relative 'jugador'
 require_relative 'mazo_sorpresa'
-
+require_relative 'tablero'
+require_relative 'titulo_propiedad'
 require_relative 'casilla'
 require_relative 'casilla_calle'
 require_relative 'casilla_impuesto'
 require_relative 'casilla_sorpresa'
-
-require_relative 'sorpresa_pagar_cobrar'
+require_relative 'sorpresa_ir_carcel'
 require_relative 'sorpresa_casilla'
+require_relative 'sorpresa_pagar_cobrar'
 require_relative 'sorpresa_por_casa_hotel'
 require_relative 'sorpresa_por_jugador'
 require_relative 'sorpresa_salir_carcel'
-require_relative 'sorpresa_ir_carcel'
 require_relative 'sorpresa_jugador_especulador'
 
 
@@ -35,7 +34,7 @@ module Civitas
       
       @gestorEstados = Gestor_estados.new
       @estado = @gestorEstados.estado_inicial
-      @indiceJugadorActual = Dado.instance.quien_empieza(total_jugadores)
+      @indice_jugador_actual = Dado.instance.quien_empieza(total_jugadores)
       inicializar_tablero(MazoSorpresa.new())
       inicializar_mazo_sorpresas(@tablero)
       @forzar = false
@@ -48,9 +47,9 @@ module Civitas
     def comprar
       jugador_actual = self.jugador_actual
       casilla = self.casilla_actual
-      titulo = casilla.tituloPropiedad
+      titulo = casilla.titulo_propiedad
       
-      if titulo.tiene_propietario 
+      if titulo.tiene_propietario
         res = false
       else
         res = jugador_actual.comprar(titulo)
@@ -86,7 +85,7 @@ module Civitas
     end
     
     def casilla_actual 
-      return @tablero.get_casilla(self.jugador_actual.num_casilla_actual)
+      return @tablero.casilla(self.jugador_actual.num_casilla_actual)
     end
     
     def jugador_actual
@@ -120,7 +119,7 @@ module Civitas
       operacion = @gestorEstados.operaciones_permitidas(jugador_actual, @estado)
       
       if operacion == Operaciones_juego::PASAR_TURNO
-        self.pasar_turno
+        pasar_turno
         self.siguiente_paso_completado(operacion)
       elsif operacion == Operaciones_juego::AVANZAR
         avanza_jugador
@@ -153,7 +152,7 @@ module Civitas
       
       jugador_actual.mover_casilla(posicion_nueva)
       
-      casilla.recibe_jugador(@indiceJugadorActual, @jugadores)
+      casilla.recibe_jugador(@indice_jugador_actual, @jugadores)
       contabilizar_pasos_por_salida(jugador_actual)
     end
     
@@ -213,7 +212,7 @@ module Civitas
     end
     
     def pasar_turno 
-      @indiceJugadorActual = @indiceJugadorActual + 1 % @jugadores.size
+      @indice_jugador_actual = @indice_jugador_actual + 1 % @jugadores.size
     end
     
     def ranking
@@ -221,7 +220,7 @@ module Civitas
     end
     
     def contabilizar_pasos_por_salida(jugador_actual) 
-      jugador_actual.pasa_por_salida while @tablero.get_por_salida > 0
+      jugador_actual.pasa_por_salida while @tablero.por_salida > 0
     end
   end
 end
