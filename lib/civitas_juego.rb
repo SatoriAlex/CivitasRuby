@@ -24,12 +24,12 @@ require_relative 'sorpresa_jugador_especulador'
 module Civitas
   class CivitasJuego
     def initialize(nombres)
-      total_jugadores = 4
+      total_jugadores = 1
       
       @jugadores = []
       
-      for i in 1..total_jugadores do
-        @jugadores.push(Jugador.new(nombres[i]))
+      for n in nombres
+        @jugadores << Jugador.new(n)
       end
       
       @gestorEstados = Gestor_estados.new
@@ -54,7 +54,7 @@ module Civitas
       else
         res = jugador_actual.comprar(titulo)
       end
-      
+            
       return res
     end
     
@@ -96,7 +96,7 @@ module Civitas
       return self.jugador_actual.hipotecar(ip)
     end
     
-    def infoJugador_texto 
+    def info_jugador_texto 
       salida = self.jugador_actual.to_s
       
       if self.final_del_juego
@@ -181,6 +181,7 @@ module Civitas
       @tablero = Tablero.new(9)
       @mazo = mazo
       
+=begin
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Ronda de Valencia", 35, 0.5, 55, 60, 120)))
       @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))
       @tablero.aniade_casilla(CasillaImpuesto.new(200, "Impuesto sobre el capital"))
@@ -209,6 +210,7 @@ module Civitas
       @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Suerte"))
       @tablero.aniade_casilla(CasillaImpuesto.new(100, "Impuesto de Lujo"))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Paseo del Prado", 205, 0.5, 395, 400, 800)))
+=end
     end
     
     def pasar_turno 

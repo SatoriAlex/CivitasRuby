@@ -1,5 +1,13 @@
 #encoding:utf-8
 require_relative 'operaciones_juego'
+require_relative 'salidas_carcel'
+require_relative 'respuestas'
+require_relative 'civitas_juego'
+require_relative 'diario'
+require_relative 'casilla'
+require_relative 'gestiones_inmobiliarias'
+require_relative 'jugador'
+require_relative 'titulo_propiedad'
 require 'io/console'
 
 module Civitas

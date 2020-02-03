@@ -3,6 +3,7 @@
 # and open the template in the editor.
 
 require_relative 'sorpresa'
+require_relative 'tablero'
 
 module Civitas
   class SorpresaIrCarcel < Sorpresa

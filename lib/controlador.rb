@@ -7,6 +7,7 @@ require_relative 'operaciones_juego'
 require_relative 'respuestas'
 require_relative 'gestiones_inmobiliarias'
 require_relative 'salidas_carcel'
+require_relative 'civitas_juego'
 
 module Civitas
   class Controlador
@@ -37,7 +38,7 @@ module Civitas
             if (res == Respuestas::SI)
               @juego.comprar
             end
-            
+                
             @juego.siguiente_paso_completado(siguiente_paso)
           when Operaciones_juego::GESTIONAR
             @vista.gestionar

@@ -7,5 +7,5 @@ module Civitas
     PAGANDO = :pagando
     TIRANDO = :tirando
   end  
-  lista_salidas_carcel = [SalidasCarcel::PAGANDO, SalidasCarcel::TIRANDO]
+  $lista_salidas_carcel = [SalidasCarcel::PAGANDO, SalidasCarcel::TIRANDO]
 end

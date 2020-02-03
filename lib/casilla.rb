@@ -3,6 +3,7 @@
 # and open the template in the editor.
 
 require_relative 'diario'
+require_relative 'jugador'
 
 
 module Civitas 
@@ -23,10 +24,8 @@ module Civitas
     end
     
     def recibe_jugador(actual, todos) 
-      if self.jugador_correcto(actual, todos)
-        if !self.instance_of? Casilla self.recibe_jugador(actual, todos)
-        else self.informe(actual, todos)
-        end
+      if jugador_correcto(actual, todos)
+        informe(actual, todos)
       end
     end
     

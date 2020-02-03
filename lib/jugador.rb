@@ -2,6 +2,10 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+require_relative 'diario'
+require_relative 'titulo_propiedad'
+
+
 module Civitas
   class Jugador
     attr_reader :num_casilla_actual, :puede_comprar, :encarcelado, :nombre, 
@@ -84,7 +88,7 @@ module Civitas
           
           if result
             @propiedades << titulo
-            Diario.instance.ocurre_evento("El jugador #{@nombre} compra la propiedad #{titulo.to_s}")
+            Diario.instance.ocurre_evento("El jugador #{@nombre} compra la propiedad #{titulo.nombre}")
           end
           
           @puede_comprar = false
@@ -165,7 +169,7 @@ module Civitas
       end
       
       if result
-        Diario.instance.ocurre_evento("El jugador #{nombre} hipoteca la propiedad #{ip}")
+        Diario.instance.ocurre_evento("El jugador #{@nombre} hipoteca la propiedad #{ip}")
       end
       
       return result
@@ -228,8 +232,8 @@ module Civitas
       return salida
     end
     
-    def pasa_por_salida 
-      self.modificar_saldo(1000)
+    def pasa_por_salida
+      modificar_saldo(1000)
       Diario.instance.ocurre_evento("El jugador ha pasado por la salida")
       
       return true
@@ -245,7 +249,7 @@ module Civitas
       salida = false
       
       if !@encarcelado
-        salida = self.modificar_saldo(cantidad)
+        salida = modificar_saldo(cantidad)
         Diario.instance.ocurre_evento("El jugador recibe el pago")
       end
       
@@ -301,15 +305,15 @@ module Civitas
     end
     
     def to_s() 
-      s = "\nNombre: #{@nombre} \nSaldo #{@@saldo_inicial} \n*---* Propiedades *---*\n" 
+      s = "\nNombre: #{@nombre} \nSaldo: #{@saldo} \n*---* Propiedades *---*\n" 
       
-      if !@propiedades.empty?
-        @propiedades.each { |n|
-          s += n.to_s + "\n"
-        }
-      else
-        s += "No tiene propiedades\n"
-      end
+      #if !@propiedades.empty?
+      #  @propiedades.each { |n|
+      #    s = s + n.to_s + "\n"
+      #  }
+      #else
+      #  s += "No tiene propiedades\n"
+      #end
       
       return s
     end

@@ -3,6 +3,7 @@
 # and open the template in the editor.
 
 require_relative 'jugador'
+require_relative 'casilla'
 
 module Civitas
   class CasillaImpuesto < Casilla
