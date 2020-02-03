@@ -69,7 +69,7 @@ module Civitas
       opcion = menu("Elige la forma para intentar salir de la carcel",
         ["Pagando","Tirando el dado"])
   
-      return lista_salidas_carcel[opcion]
+      return $lista_salidas_carcel[opcion]
     end
     
     def comprar

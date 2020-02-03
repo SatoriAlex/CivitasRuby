@@ -85,7 +85,7 @@ module Civitas
     end
     
     def casilla_actual 
-      return @tablero.casilla(self.jugador_actual.num_casilla_actual)
+      return @tablero.casilla(jugador_actual.num_casilla_actual)
     end
     
     def jugador_actual
@@ -178,14 +178,15 @@ module Civitas
     end
     
     def inicializar_tablero(mazo) 
-      @tablero = Tablero.new(9)
+      @tablero = Tablero.new(2)
       @mazo = mazo
       
-=begin
+      @tablero.aniade_juez 
+=begin   
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Ronda de Valencia", 35, 0.5, 55, 60, 120)))
       @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))
       @tablero.aniade_casilla(CasillaImpuesto.new(200, "Impuesto sobre el capital"))
-
+      
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Glorieta cuatro caminos", 55, 0.5, 95, 100, 200)))
       @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Suerte"))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Calle bravo Murillo", 65, 0.5, 115, 120, 240)))
@@ -202,7 +203,7 @@ module Civitas
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Calle de Cea Bermudez", 125, 0.5, 235, 240, 480)))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Avenida de los Reyes Catolicos", 135, 0.5, 255, 260, 520)))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Plaza de Espana", 145, 0.5, 275, 280, 560)))
-      @tablero.aniade_juez
+      
 
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Puerta del Sol", 155, 0.5, 295, 300, 600)))
       @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))
@@ -210,7 +211,7 @@ module Civitas
       @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Suerte"))
       @tablero.aniade_casilla(CasillaImpuesto.new(100, "Impuesto de Lujo"))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Paseo del Prado", 205, 0.5, 395, 400, 800)))
-=end
+=end 
     end
     
     def pasar_turno 

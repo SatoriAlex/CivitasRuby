@@ -20,7 +20,8 @@ module Civitas
     end
     
     def to_s
-      puts super + "  *---* Importe: " + @importe + " *---*"
+      super
+      #s = s + "  *---* Importe: #{@importe} *---*"
     end
   end
 end

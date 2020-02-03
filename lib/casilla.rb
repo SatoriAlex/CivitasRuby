@@ -16,7 +16,7 @@ module Civitas
     
     def informe(actual, todos)
       diario = Diario.instance
-      diario.ocurre_evento("Jugador: #{todos[actual]} Casilla: #{self.to_s}")
+      diario.ocurre_evento("Jugador: #{todos[actual]} Casilla: #{to_s}")
     end
     
     def jugador_correcto(actual, todos) 
