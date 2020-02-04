@@ -11,7 +11,7 @@ module Civitas
   class JuegoTexto
     def main
       vista = Vista_textual.new
-      civitas = CivitasJuego.new(["Fernando"])
+      civitas = CivitasJuego.new(["Fernando", "Manolo", "Pepe", "Manuela"])
       controlador = Controlador.new(civitas, vista)
       Dado.instance.set_debug(true)
       

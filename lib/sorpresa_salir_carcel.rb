@@ -6,6 +6,8 @@ require_relative 'sorpresa'
 
 module Civitas
   class SorpresaSalirCarcel < Sorpresa
+    attr_reader :texto
+    
     alias :super_jugador_correcto :jugador_correcto
     alias :super_informe :informe
     

@@ -24,7 +24,7 @@ require_relative 'sorpresa_jugador_especulador'
 module Civitas
   class CivitasJuego
     def initialize(nombres)
-      total_jugadores = 1
+      total_jugadores = 4
       
       @jugadores = []
       
@@ -156,7 +156,9 @@ module Civitas
       contabilizar_pasos_por_salida(jugador_actual)
     end
     
-    def inicializar_mazo_sorpresas(tablero) 
+    def inicializar_mazo_sorpresas(tablero)
+      @mazo.al_mazo(SorpresaPorJugador.new(100, "Cada jugador paga el valor"))
+=begin
       @mazo.al_mazo(SorpresaPagarCobrar.new(-200, "Paga el impuesto de lujo"))
       @mazo.al_mazo(SorpresaPagarCobrar.new(200, "Cobra"))
 
@@ -170,21 +172,21 @@ module Civitas
       @mazo.al_mazo(SorpresaPorJugador.new(100, "Cada jugador paga el valor"))
       @mazo.al_mazo(SorpresaPorJugador.new(200, "Cada jugador paga el valor"))
 
-      @mazo.al_mazo(SorpresaSalirCarcel.new(@mazo))
-
-      @mazo.al_mazo(SorpresaIrCarcel.new(@tablero))
+      
+      
       
       @mazo.al_mazo(SorpresaJugadorEspeculador.new(1000, "Te conviertes en jugador especulador"))
+=end    
     end
     
     def inicializar_tablero(mazo) 
-      @tablero = Tablero.new(2)
+      @tablero = Tablero.new(3)
       @mazo = mazo
       
-      @tablero.aniade_juez 
+      @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))
 =begin   
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Ronda de Valencia", 35, 0.5, 55, 60, 120)))
-      @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))
+      
       @tablero.aniade_casilla(CasillaImpuesto.new(200, "Impuesto sobre el capital"))
       
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Glorieta cuatro caminos", 55, 0.5, 95, 100, 200)))

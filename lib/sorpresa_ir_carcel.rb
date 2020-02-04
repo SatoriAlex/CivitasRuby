@@ -19,7 +19,7 @@ module Civitas
     def aplicar_jugador(actual, todos) 
       if (super_jugador_correcto(actual, todos))
         super_informe(actual,todos)
-        todos[actual].encarcelar(@tablero.carcel);
+        todos[actual].encarcelar(@tablero.num_casilla_carcel);
       end
     end
     

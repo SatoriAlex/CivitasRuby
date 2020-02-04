@@ -21,9 +21,9 @@ module Civitas
         jugador = todos[actual]
         pago = SorpresaPagarCobrar.new(-1 * @valor, @texto)
 
-        for j in todos
-          pago.aplicar_jugador(j, todos) if j != jugador
-        end
+        todos.each_with_index { |element,i|  
+          pago.aplicar_jugador(i, todos) if element != jugador
+        }
 
         cobro = SorpresaPagarCobrar.new((todos.size-1) * @valor, @texto)
         cobro.aplicar_jugador(actual, todos)

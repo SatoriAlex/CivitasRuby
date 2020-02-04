@@ -259,7 +259,7 @@ module Civitas
     def salir_carcel_pagando
       salida = false
       
-      if !@encarcelado && self.puede_salir_carcel_pagando()
+      if @encarcelado && puede_salir_carcel_pagando
         salida = true
         self.paga(200)
         @encarcelado = false
@@ -326,7 +326,7 @@ module Civitas
       unless @encarcelado 
         if self.tiene_salvoconducto
           salida = false
-          self.perder_salvoconducto
+          perder_salvoconducto
           Diario.instance.ocurre_evento("El jugador se ha librado de la carcel")
         end
       end
@@ -351,7 +351,7 @@ module Civitas
     end
     
     def perder_salvoconducto 
-      @salvoconducto.usuada
+      @salvoconducto.usada
       @salvoconducto = nil
     end
     

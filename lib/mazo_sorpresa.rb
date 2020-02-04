@@ -60,12 +60,14 @@ module Civitas
     def inhabilitar_carta_especial(s)
       diario = Diario.instance
       
+      puts s
+      
       if @sorpresas.delete(s)
         @cartas_especiales << s
       end
       
-      if (! @sorpresas.include? s and @cartas_especiales.include? s)
-        diario.ocurre_evento("Carta sorpresa inhabilitada: " + s)
+      if (!@sorpresas.include? s) && (@cartas_especiales.include? s)
+        diario.ocurre_evento("Carta sorpresa inhabilitada: #{s.texto}")
       end
     end
     
@@ -76,8 +78,8 @@ module Civitas
         @sorpresas << s
       end
       
-      if (! @cartas_especiales.include? s and @sorpresas.include? s)
-        diario.ocurre_evento("Carta sorpresa habilitada: " + s)
+      if (!@cartas_especiales.include? s) && (@sorpresas.include? s)
+        diario.ocurre_evento("Carta sorpresa habilitada: #{s.texto}")
       end
     end
   end
