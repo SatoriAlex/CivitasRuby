@@ -15,9 +15,11 @@ module Civitas
     attr_reader :fianza, :especulador
     
     @@factorEspeculador = 2
+    @@casas_max = Jugador.casas_max * @@factorEspeculador
+    @@hoteles_max = Jugador.hoteles_max * @@factorEspeculador
     
     def initialize(otro, fianza)
-      super(otro)
+      super('', otro)
       @fianza = fianza
       @especulador = true
       
@@ -37,7 +39,7 @@ module Civitas
       resultado = false
       
       unless @encarcelado
-        if !super_tiene_salvoconducto
+        if super_tiene_salvoconducto
           super_perder_salvoconducto
           Diario.instance.ocurre_evento("El jugador #{@nombre} se libra de la cacel y pierde salvoconducto")
         elsif super_puedo_gastar(@fianza)
@@ -54,7 +56,7 @@ module Civitas
     def paga_impuesto(cantidad)
       salida = false;
 
-      if !this.encarcelado
+      if !encarcelado
         salida = self.paga(cantidad/2)
         Diario.instance.ocurre_evento("El jugador paga #{cantidad/2} de impuesto")
       end
@@ -64,16 +66,8 @@ module Civitas
     
     private 
     
-    def casa_max
-      super.CasasMax * @@factorEspeculador
-    end
-
-    def hoteles_max
-      super.HotelesMax * @@factorEspeculador
-    end
-    
     def pagar_fianza
-      puede_pagar = super.puedo_gastar(fianza)
+      puede_pagar = super_puedo_gastar(fianza)
 
       if puede_pagar
         modificar_saldo(-fianza)

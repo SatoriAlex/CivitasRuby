@@ -88,11 +88,11 @@ module Civitas
       
       if acciones[opcion] != "Terminar"
         @juego_model.jugador_actual.propiedades.each do |propiedad|
-          propiedades << propiedad.to_s
+          propiedades << propiedad.nombre
         end
         
-        @i_propiedad = menu("Cual propiedad quieres " + acciones[opcion] + "?",
-                           propiedades)
+        @i_propiedad = menu("Cual propiedad quieres #{acciones[opcion].downcase}?",
+          propiedades)
       end
     end
 

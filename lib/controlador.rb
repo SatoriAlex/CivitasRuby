@@ -46,7 +46,7 @@ module Civitas
             gest = @vista.gestion
             ip = @vista.propiedad
             
-            gestion = Civitas::lista_gestiones[gest]
+            gestion = $lista_gestiones[gest]
             
             oi = OperacionInmobiliaria.new(gestion, ip)
             

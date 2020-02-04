@@ -23,7 +23,7 @@ module Civitas
       if !@titulo_propiedad.tiene_propietario 
         jugador.puede_comprar_casilla
       else
-        @titulo_propiedad.tramitarAlquiler(jugador)
+        @titulo_propiedad.tramitar_alquiler(jugador)
       end
     end
     

@@ -157,8 +157,6 @@ module Civitas
     end
     
     def inicializar_mazo_sorpresas(tablero)
-      @mazo.al_mazo(SorpresaPorJugador.new(100, "Cada jugador paga el valor"))
-=begin
       @mazo.al_mazo(SorpresaPagarCobrar.new(-200, "Paga el impuesto de lujo"))
       @mazo.al_mazo(SorpresaPagarCobrar.new(200, "Cobra"))
 
@@ -168,25 +166,22 @@ module Civitas
 
       @mazo.al_mazo(SorpresaPorCasaHotel.new(-100, "Pagas por cada casa y hotel que poseas"))
       @mazo.al_mazo(SorpresaPorCasaHotel.new(100, "Cobras por cada casa y hotel que poseas"))
-
+      
       @mazo.al_mazo(SorpresaPorJugador.new(100, "Cada jugador paga el valor"))
       @mazo.al_mazo(SorpresaPorJugador.new(200, "Cada jugador paga el valor"))
-
       
+      @mazo.al_mazo(SorpresaSalirCarcel.new(@mazo))
+      @mazo.al_mazo(SorpresaIrCarcel.new(@mazo))
       
-      
-      @mazo.al_mazo(SorpresaJugadorEspeculador.new(1000, "Te conviertes en jugador especulador"))
-=end    
+      @mazo.al_mazo(SorpresaJugadorEspeculador.new(1000, "Te conviertes en jugador especulador"))   
     end
     
     def inicializar_tablero(mazo) 
-      @tablero = Tablero.new(3)
+      @tablero = Tablero.new(9)
       @mazo = mazo
-      
-      @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))
-=begin   
+ 
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Ronda de Valencia", 35, 0.5, 55, 60, 120)))
-      
+      @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))
       @tablero.aniade_casilla(CasillaImpuesto.new(200, "Impuesto sobre el capital"))
       
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Glorieta cuatro caminos", 55, 0.5, 95, 100, 200)))
@@ -201,23 +196,16 @@ module Civitas
       @tablero.aniade_casilla(Casilla.new("Parking Gratuito"))
 
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Avenida de America", 115, 0.5, 215, 220, 440)))
-      @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Suerte"))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Calle de Cea Bermudez", 125, 0.5, 235, 240, 480)))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Avenida de los Reyes Catolicos", 135, 0.5, 255, 260, 520)))
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Plaza de Espana", 145, 0.5, 275, 280, 560)))
+      @tablero.aniade_juez
       
-
       @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Puerta del Sol", 155, 0.5, 295, 300, 600)))
-      @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Caja de Comunidad"))
-      @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Gran Via", 165, 0.5, 315, 320, 640)))
-      @tablero.aniade_casilla(CasillaSorpresa.new(@mazo, "Suerte"))
-      @tablero.aniade_casilla(CasillaImpuesto.new(100, "Impuesto de Lujo"))
-      @tablero.aniade_casilla(CasillaCalle.new(TituloPropiedad.new("Paseo del Prado", 205, 0.5, 395, 400, 800)))
-=end 
     end
     
     def pasar_turno 
-      @indice_jugador_actual = @indice_jugador_actual + 1 % @jugadores.size
+      @indice_jugador_actual = (@indice_jugador_actual + 1) % @jugadores.size
     end
     
     def ranking

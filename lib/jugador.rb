@@ -12,13 +12,15 @@ module Civitas
                 :propiedades, :saldo, :casas_max, :hoteles_max, :casas_por_hotel,
                 :precio_libertad, :paso_por_salida
     
+    @@casas_max = 4
+    @@casas_por_hotel = 4
+    @@hoteles_max = 4
+    @@paso_por_salida = 1000
+    @@precio_libertad = 200
+    @@saldo_inicial = 7500
+    
     def initialize (nombre = nil, otro = nil)
-      @@casas_max = 4
-      @@casas_por_hotel = 4
-      @@hoteles_max = 4
-      @@paso_por_salida = 1000
-      @@precio_libertad = 200
-      @@saldo_inicial = 7500
+      @nombre = nombre
       @num_casilla_actual = 0
       @saldo = @@saldo_inicial
       @propiedades = []
@@ -26,15 +28,21 @@ module Civitas
       unless otro.nil?
         @encarcelado = otro.encarcelado
         @nombre = otro.nombre
-        @num_casilla_actual = otro.numCasillaActual
+        @num_casilla_actual = otro.num_casilla_actual
         @puede_comprar = otro.puede_comprar
         @saldo = otro.saldo
         @propiedades = otro.propiedades
       end
-      
-      @nombre = nombre unless nombre.nil?
     end
    
+    def self.casas_max
+      @@casas_max
+    end
+    
+    def self.hoteles_max
+      @@hoteles_max
+    end
+    
     def cancelar_hipoteca(ip) 
       result = false
       
@@ -42,7 +50,7 @@ module Civitas
         return result
       end
       
-      if self.existe_la_propiedad(ip)
+      if existe_la_propiedad(ip)
         propiedad = @propiedades[ip]
         cantidad = propiedad.importe_cancelar_hipoteca
         puedo_gastar = self.puedo_gastar(cantidad)
@@ -105,9 +113,9 @@ module Civitas
         return result
       end
       
-      if self.existe_la_propiedad(ip)
+      if existe_la_propiedad(ip)
         propiedad = @propiedades[ip]
-        puedo_edificar_casa = self.puedo_edificar_casa(propiedad)
+        puedo_edificar_casa = puedo_edificar_casa(propiedad)
         
         if puedo_edificar_casa
           result = propiedad.construir_casa(self)
@@ -126,9 +134,9 @@ module Civitas
         return result
       end
       
-      if self.existe_la_propiedad(ip) 
+      if existe_la_propiedad(ip) 
         propiedad = @propiedades[ip]
-        puedo_edificar_hotel = self.puedo_edificar_hotel(propiedad)
+        puedo_edificar_hotel = puedo_edificar_hotel(propiedad)
         
         if puedo_edificar_hotel
           result = propiedad.construir_hotel(self)
@@ -163,7 +171,7 @@ module Civitas
         return result
       end
       
-      if self.existe_la_propiedad(ip)
+      if existe_la_propiedad(ip)
         propiedad = @propiedades[ip]
         result = propiedad.hipotecar(self)
       end
@@ -284,7 +292,7 @@ module Civitas
       return !@propiedades.empty?
     end
     
-    def tiene_salvoconducto 
+    def tiene_salvoconducto
       return !@salvoconducto.nil?
     end
     
@@ -292,9 +300,9 @@ module Civitas
       salida = false
       
       if !@encarcelado
-        if self.existe_la_propiedad(ip) && @propiedades[ip].vender(self)
-          @propiedades.delete_at(ip)
+        if existe_la_propiedad(ip) && @propiedades[ip].vender(self)
           Diario.instance.ocurre_evento("Se ha venido la propiedad #{@propiedades[ip].nombre}")
+          @propiedades.delete_at(ip)
           salida = true
         end
         
